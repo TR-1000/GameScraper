@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Form to add games -->
+<form action="{% url 'favorites' %}" method="POST">
+  {% csrf_token %}
+  <label for="title">
+    <input id="title" placeholder="enter game title" name="title" type="text" required>
+  </label>
+  <button class="btn waves-effect waves-light" type="submit" name="action">Add to Favorites
+   <i class="material-icons right">send</i>
+ </button>
+</form>
+
+
+  <!-- {{games}} -->
+
+
+<h1 id="favorites">Favorite Games</h1>
+
+{% for game in games %}
+<div class="container">
+  <div class="col s12 m6">
+    <div class="card blue-grey darken-1">
+      <div class="card-content white-text">
+        <span class="card-title"><h4>{{game}}</h4></span>
+        <form action="{% url 'home' %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="game_search" value="{{game}}">
+          <button class="btn waves-effect waves-light" type="submit" name="action">Get Info
+           <i class="material-icons right">send</i>
+         </button>
+        </form>
+      </div>
+      <div class="card-action">
+        <a href="{% url 'delete' game.id %}">remove from favorites</a>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endfor %}
+
+
+
+{% endblock %}

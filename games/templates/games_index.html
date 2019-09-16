@@ -1,1 +1,100 @@
-<h1>Hello World</h1>
+{% extends "base.html" %}
+{% block content %}
+
+
+  <!-- <h2>{{api.results}}</h2> -->
+
+    {% for game in rawg_api.results %}
+    <div class="container">
+      <div class="col s12 m7">
+        <div class="card">
+          <div class="card-image">
+            <img src="{{game.background_image}}">
+            <span class="card-title">{{game.name}}</span>
+          </div>
+          <div class="card-content">
+            {% for info in bing_api.entities.value %}
+            <form action="{% url 'favorites' %}" method="POST">
+              {% csrf_token %}
+                <input id="title" value="{{game.name}}" name="title" type="hidden" required>
+                <button class="btn" type="submit" name="action">Add to Favorites
+                  <i class="material-icons right">send</i>
+                </button>
+              </form>
+              <p>{{info.description}}</p> <br>
+              <p><span>Genre: </span>{{info.entityPresentationInfo.entityTypeDisplayHint}}</p>
+            </div>
+            <div class="card-action">
+
+              <iframe src="{{game.clip.clips.full}}" width="560" height="315"></iframe>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+    <div class="container">
+      <div class="col s12 m7">
+      {% for article in bing_api.news.value %}
+        <div class="card">
+          <div class="card-image cover">
+            <img src="{{ article.image.contentUrl }}">
+            <span class="card-title">{{ article.name }}</span>
+          </div>
+          <div class="card-content">
+            <p>{{ article.description}}</p>
+          </div>
+          <div class="card-action">
+            <a href="{{ article.url }}">Read More...</a>
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+
+
+    <div class="container">
+      <div class="col s12 m7">
+        <div class="card">
+      {% for video in bing_api.videos.value %}
+        <iframe class="bing_frame" src="{{video.webSearchUrl}}" width="" height=""></iframe>
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+  <div class="container">
+    <div class="col s12 m7">
+      <div class="card">
+        <div class="row">
+          <iframe class="bing_frame" src="https://www.bing.com/images/search?q=fallout+76&qpvt=fallout+76&first=1&cw=1942&ch=1270" width="" height=""></iframe>
+
+          {% for image in bing_api.images.value %}
+          <div class="card-image">
+
+
+
+          <a href="{{ image.hostPageDisplayUrl }}" target="
+          " class=><img src="{{ image.contentUrl }}" alt="" ></a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- <h3>Bing Videos</h3>
+  <div class="container">
+    {% for video in bing_api.videos.value %}
+      <iframe src="{{video.webSearchUrl}}" width="" height=""></iframe>
+    {% endfor %}
+  </div> -->
+
+{%endblock %}
