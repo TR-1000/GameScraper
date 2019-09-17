@@ -1,0 +1,25 @@
+body {
+  background-color: #dbdfe8;
+}
+
+nav {
+  background: #000
+}
+
+.cover {
+  width: 300px;
+}
+
+.bing_frame {
+  width: 95%;
+  height: 1000px;
+}
+
+#favorites {
+  text-align: center;
+  color: #fff;
+}
+
+#favorites_form {
+  background-color: white;
+}
