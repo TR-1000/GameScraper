@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from . models import Game
 from . forms import GameForm
-
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     import requests
     import json
+    import os
 
     # Import required modules.
     from azure.cognitiveservices.search.websearch import WebSearchAPI
@@ -25,8 +26,8 @@ def home(request):
         except Exception as error:
             rawg_api = "Error loading api data..."
 
-
-        subscription_key = "d934abc86e314ea0bada2199dd27cadf"
+        API_KEY = os.getenv("API_KEY")
+        subscription_key = API_KEY
         assert subscription_key
         search_url = "https://api.cognitive.microsoft.com/bing/v7.0/search"
         headers = {"Ocp-Apim-Subscription-Key": subscription_key}
@@ -1389,27 +1390,27 @@ def home(request):
 
 
 
-
-
-
-def about(request):
-    return render(request, 'about.html', {})
-
-
-
-
-
 def favorites(request):
+    form = GameForm(request.POST or None)
     if request.method == 'POST':
-        form = GameForm(request.POST or None)
 
         if form.is_valid():
             form.save()
             messages.success(request, ("This game has been added to your favorites"))
             return redirect('favorites')
     games = Game.objects.all()
-    return render(request, 'favorites.html', {'games': games})
+    return render(request, 'favorites.html', {'form': form, 'games': games})
 
+
+def update(request, game_id):
+    games = Game.objects.all()
+    game = Game.objects.get(pk=game_id)
+    form = GameForm(request.POST or None, instance=game)
+    if form.is_valid():
+        game = form.save()
+        return redirect(favorites)
+
+    return render(request, 'favorites.html', {'form': form, 'games': games})
 
 
 

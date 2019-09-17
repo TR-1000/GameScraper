@@ -2,13 +2,13 @@
 {% block content %}
 
 <!-- Form to add games -->
-<form action="{% url 'favorites' %}" method="POST">
+<form id="favorites_form" action="{% url 'favorites' %}" method="POST">
+  <label  for="title">
   {% csrf_token %}
-  <label for="title">
-    <input id="title" placeholder="enter game title" name="title" type="text" required>
+  {{form.as_p}}
   </label>
   <button class="btn waves-effect waves-light" type="submit" name="action">Add to Favorites
-   <i class="material-icons right">send</i>
+   <i class="material-icons right">add_circle</i>
  </button>
 </form>
 
@@ -28,13 +28,13 @@
           {% csrf_token %}
           <input type="hidden" name="game_search" value="{{game}}">
           <button class="btn waves-effect waves-light" type="submit" name="action">Get Info
-           <i class="material-icons right">send</i>
+           <i class="material-icons right">info</i>
          </button>
         </form>
       </div>
       <div class="card-action">
         <a href="{% url 'delete' game.id %}">remove from favorites</a>
-
+        <a href="{% url 'update' game.id %}">Edit Game</a>
       </div>
     </div>
   </div>

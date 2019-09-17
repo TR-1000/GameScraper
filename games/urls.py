@@ -7,4 +7,5 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('favorites', views.favorites, name="favorites"),
     path('delete/<game_id>', views.delete, name="delete"),
+    path('update/<game_id>', views.update, name="update"),
 ]

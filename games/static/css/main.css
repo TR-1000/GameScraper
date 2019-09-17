@@ -1,5 +1,5 @@
 body {
-  background-color: #030b1c;
+  background-color: #dbdfe8;
 }
 
 nav {
@@ -18,4 +18,8 @@ nav {
 #favorites {
   text-align: center;
   color: #fff;
+}
+
+#favorites_form {
+  background-color: white;
 }
