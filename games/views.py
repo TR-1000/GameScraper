@@ -42,7 +42,31 @@ def home(request):
         #return render(request, 'games_index.html', {'rawg_api': rawg_api})
 
     else:
-        return render(request, 'games_index.html', {'game_search': 'Enter a game title', 'rawg_api': {
+        import requests
+        from bs4 import BeautifulSoup
+
+        gamepedia_news_page = requests.get("https://www.gamepedia.com/",headers={"User-Agent":"Defined"})
+
+        gamepedia_soup = BeautifulSoup(gamepedia_news_page.text, "html.parser")
+
+        gamepedia_articles = []
+        gamepedia_results = gamepedia_soup.select('article')
+        #print(results)
+        for result in gamepedia_results:
+            url = result.a.get('href')
+            image = result.a.img.get('src')
+            title = result.h2.a.text
+            author = result.span.text
+            time = result.abbr.text
+            gamepedia_articles.append({
+            'title' : title,
+            'author' : author,
+            'time' : time,
+            'url' : url,
+            'image' : image
+            })
+
+        return render(request, 'games_index.html', {'game_search': 'Enter a game title', 'gamepedia_articles': gamepedia_articles, 'rawg_api': {
 "count": 102,
 "next": "https://api.rawg.io/api/games?page=2&page_size=1&search=fallout+76",
 "previous": None,
@@ -1407,11 +1431,22 @@ def update(request, game_id):
     game = Game.objects.get(pk=game_id)
     form = GameForm(request.POST or None, instance=game)
     if form.is_valid():
-        game = form.save()
+        form.save()
         return redirect(favorites)
 
-    return render(request, 'favorites.html', {'form': form, 'games': games})
+    else:
+        form = GameForm(instance=game)
 
+    return render(request, 'update.html', {'form': form, 'games': games})
+
+
+# def update(request, id):
+#     employee = Employee.objects.get(id=id)
+#     form = EmployeeForm(request.POST, instance = employee)
+#     if form.is_valid():
+#         form.save()
+#         return redirect("/show")
+#     return render(request, 'edit.html', {'employee': employee})
 
 
 def delete(request, game_id):

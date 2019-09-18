@@ -1,25 +1,74 @@
 body {
-  background-color: #dbdfe8;
+  background-color: #e8e4db;
+}
+
+header {
+  height: 500px;
+  background-color: black;
+  background-image: url("/static/img/Favorite_Video_Games.png");
+  background-repeat: no-repeat, repeat;
+  background-size: cover;
 }
 
 nav {
-  background: #000
+  background: #000;
+  height: 104px;
+  line-height: 98px;
+  margin-bottom: 50px;
 }
 
-.cover {
-  width: 300px;
+
+nav .brand-logo {
+  font-family: 'Press Start 2P', cursive;
+}
+
+.btn, .btn-large, .btn-small {
+  background-color: #266ca6;
+
 }
 
 .bing_frame {
   width: 95%;
   height: 1000px;
+  margin: 0 auto;
+}
+
+.card {
+  margin-bottom: 50px;
+}
+
+.card-video {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.card .card-title {
+  font-size: 35px;
+  font-weight: 500;
+  text-shadow: 2px 2px #130202;
+}
+
+#search {
+  height: 104px
 }
 
 #favorites {
+  font-family: 'Press Start 2P', cursive;
   text-align: center;
-  color: #fff;
+  color: #3270e9;
 }
 
 #favorites_form {
   background-color: white;
+}
+
+nav .brand-logo {
+    position: absolute;
+    color: #fff;
+    display: inline-block;
+    font-size: 4.1rem;
+    padding: 0;
 }

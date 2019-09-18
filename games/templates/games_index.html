@@ -2,7 +2,25 @@
 {% block content %}
 
 
-  <!-- <h2>{{api.results}}</h2> -->
+  {% for article in gamepedia_articles %}
+    <div class="container">
+      <div class="col s12 m7">
+        <div class="card">
+          <div class="card-image">
+            <img src="{{article.image}}">
+          </div>
+          <div class="card-content">
+            <h4>{{article.title}}</h4>
+            <p>{{article.author}}</p>
+            <small><p>{{article.time}}</p></small>
+            </div>
+            <div class="card-action">
+              <a href="{{article.url}}" target="_blank" >Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
 
     {% for game in rawg_api.results %}
     <div class="container">
@@ -14,8 +32,10 @@
           </div>
           <div class="card-content">
             {% for info in bing_api.entities.value %}
+            <!-- Favorites form -->
             <form action="{% url 'favorites' %}" method="POST">
               {% csrf_token %}
+                <input id="image" value="{{game.background_image}}" name="image" type="hidden">
                 <input id="title" value="{{game.name}}" name="title" type="hidden" required>
                 <button class="btn" type="submit" name="action">Add to Favorites
                   <i class="material-icons right">add_circle</i>
@@ -24,9 +44,8 @@
               <p>{{info.description}}</p> <br>
               <p><span>Genre: </span>{{info.entityPresentationInfo.entityTypeDisplayHint}}</p>
             </div>
-            <div class="card-action">
-
-              <iframe src="{{game.clip.clips.full}}" width="560" height="315"></iframe>
+            <div class="card-video">
+              <iframe class="video_frame" src="{{game.clip.clips.full}}" width="560" height="315"></iframe>
             </div>
             {% endfor %}
           </div>
@@ -38,7 +57,7 @@
       <div class="col s12 m7">
       {% for article in bing_api.news.value %}
         <div class="card">
-          <div class="card-image cover">
+          <div class="card-image">
             <img src="{{ article.image.contentUrl }}">
             <span class="card-title">{{ article.name }}</span>
           </div>
@@ -65,14 +84,11 @@
     </div>
 
 
-
-
-
-  <div class="container">
+    <div class="container">
     <div class="col s12 m7">
       <div class="card">
         <div class="row">
-          <iframe class="bing_frame" src="{{bing_api.images.webSearchUrl}}" width="" height=""></iframe>
+          
 
           {% for image in bing_api.images.value %}
           <div class="card-image">
@@ -87,6 +103,7 @@
       </div>
     </div>
   </div>
+
 
 
 

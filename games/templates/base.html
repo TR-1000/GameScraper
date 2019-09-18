@@ -1,40 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
+    <link rel="stylesheet" href="/static/css/main.css">
     <meta charset="utf-8">
     <title>Gamified App</title>
   </head>
   <body>
+
+    <header>
+      <h1>GameScrape</h1>
+    </header>
     <!-- navigation bar -->
     <nav>
     <div class="nav-wrapper">
-      <a href="{% url 'home' %}" class="brand-logo center">Game Informed</a>
+      <a href="{% url 'home' %}" class="brand-logo center">GameScrape</a>
       <ul id="nav-mobile" class="left">
+        <li>
+          <form action="{% url 'home' %}" method="POST">
+          {% csrf_token %}
+          <div class="input-field">
+            <input id="search" placeholder="search for a game" name="game_search" type="search" required>
+            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            <i class="material-icons">close</i>
+          </div>
+        </form>
+      </li>
+      </ul>
+      <ul id="nav-mobile" class="right">
         <li><a href="{% url 'favorites' %}">Favorites</a></li>
       </ul>
     </div>
   </nav>
-  <nav>
-    <div class="nav-wrapper">
-      <!-- search form -->
-      <form action="{% url 'home' %}" method="POST">
-        {% csrf_token %}
-        <div class="input-field">
-          <input id="search" placeholder="search for a game" name="game_search" type="search" required>
-          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-          <i class="material-icons">close</i>
-        </div>
-      </form>
-    </div>
-  </nav>
+
 {% block content %}
  <!-- this is where the other pages content will be -->
 {% endblock %}
 
   </body>
-  <link rel="stylesheet" href="/static/css/main.css">
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </html>
