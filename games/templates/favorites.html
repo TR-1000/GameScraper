@@ -1,16 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 
+<div class="container">
+  
+    <div class="col s12 m8 offset-m1 xl7 offset-xl1">
+      <form id="favorites_form" action="{% url 'favorites' %}" method="POST">
+        <label  for="title">
+        {% csrf_token %}
+        {{form.as_p}}
+        </label>
+        <button class="btn waves-effect waves-light" type="submit" name="action">Add to Favorites
+         <i class="material-icons right">add_circle</i>
+       </button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
 <!-- Form to add games -->
-<form id="favorites_form" action="{% url 'favorites' %}" method="POST">
-  <label  for="title">
-  {% csrf_token %}
-  {{form.as_p}}
-  </label>
-  <button class="btn waves-effect waves-light" type="submit" name="action">Add to Favorites
-   <i class="material-icons right">add_circle</i>
- </button>
-</form>
+
 
 
   <!-- {{games}} -->
