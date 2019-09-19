@@ -2,6 +2,10 @@ body {
   background-color: #000;
 }
 
+main {
+  margin-top: 170px
+}
+
 header {
   height: 500px;
   background-color: black;
@@ -10,14 +14,17 @@ header {
   background-size: cover;
 }
 
+nav {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+}
+
 nav, ul {
   background: #212121;
   height: 104px;
   line-height: 98px;
   margin-bottom: 100px;
-}
-.sidenav.sidenav-fixed {
-  background-color: black;
 }
 
 
@@ -25,8 +32,12 @@ nav .brand-logo {
   font-family: 'Press Start 2P', cursive;
 }
 
+.span-blue {
+  color: #fed700
+}
+
 .btn, .btn-large, .btn-small {
-  background-color: #266ca6;
+  background-color: #0d1216;
 
 }
 
@@ -78,6 +89,14 @@ nav .brand-logo {
 }
 
 
+.blue-card {
+  background-color: #0e60d4
+}
+
+.main-search {
+  padding: 25px;
+}
+
 .cover {
   max-height: 315px;
 }
@@ -92,7 +111,6 @@ nav .brand-logo {
   font-size: 25px;
   font-weight: 500;
   margin-bottom: 10px;
-
 }
 
 #search {
@@ -101,7 +119,7 @@ nav .brand-logo {
 
 #favorites {
   text-align: center;
-  color: #266ca6;
+  color: #fed700;
 }
 
 #favorites_form {

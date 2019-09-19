@@ -4,65 +4,63 @@
 
   <!------ Home View ------------------------------------------------->
   {% if search == False %}
-  <div class="container">
-    <div class=" card item-contain blue-grey darken-1">
-        {% for item in amazon_featured %}
-        <div class="card horizontal amazon">
-          <div class="card-image">
-            <img src="{{item.image}}">
-          </div>
-          <div class="card-stacked">
-            <div class="card-content">
-              <h5>{{item.title}}</h5>
-              <h6>{{item.price}}</h6>
+    <div class="container">
+      <div class=" card item-contain blue-card">
+          {% for item in amazon_featured %}
+          <div class="card horizontal amazon">
+            <div class="card-image">
+              <img src="{{item.image}}">
+            </div>
+            <div class="card-stacked">
+              <div class="card-content">
+                <h5>{{item.title}}</h5>
+                <h6>{{item.price}}</h6>
+              </div>
             </div>
           </div>
+          {% endfor %}
         </div>
-        {% endfor %}
       </div>
     </div>
-  </div>
 
 
-  <div class="container">
+    <div class="container">
+      <div class=" card item-contain blue-card">
+        {% for item in steam_news %}
+          <div class="card amazon">
+            <div class="card-image">
+              <img src="{{item.image}}">
+            </div>
+            <div class="card-content">
+              <h5>{{item.title}}</h5>
+            </div>
 
-    <div class=" card item-contain blue-grey darken-1">
-      {% for item in steam_news %}
-
-        <div class="card amazon">
-          <div class="card-image">
-            <img src="{{item.image}}">
           </div>
-          <div class="card-content">
-            <h5>{{item.title}}</h5>
-          </div>
 
+          {% endfor %}
         </div>
+      </div>
 
-      {% endfor %}
-    </div>
-  </div>
-
-  <div class="container">
-      <div class=" card item-contain blue-grey darken-1">
-        {% for article in gamepedia_articles %}
-        <div class="card amazon">
-          <div class="card-image">
-            <img src="{{article.image}}">
+      <div class="container">
+        <div class=" card item-contain blue-card">
+          {% for article in gamepedia_articles %}
+          <div class="card amazon">
+            <div class="card-image">
+              <img src="{{article.image}}">
+            </div>
+            <div class="card-content">
+              <h4>{{article.title}}</h4>
+              <h5>Source: Gamepedia</h5>
+              <h6>{{article.author}}</h6>
+              <small><h6>{{article.time}}</h6></small>
+            </div>
+            <div class="card-action">
+              <a href="{{article.url}}" target="_blank" >Read More at Gamepedia</a>
+            </div>
           </div>
-          <div class="card-content">
-            <h4>{{article.title}}</h4>
-            <h5>Source: Gamepedia</h5>
-            <h6>{{article.author}}</h6>
-            <small><h6>{{article.time}}</h6></small>
-          </div>
-        <div class="card-action">
-          <a href="{{article.url}}" target="_blank" >Read More at Gamepedia</a>
+          {% endfor %}
         </div>
-        </div>
-      {% endfor %}
-    </div>
-  </div>
+      </div>
   {% endif %}
 
 
@@ -71,10 +69,11 @@
 
     <!------------------- SEARCH VIEW  ----------------------------->
 
+  {% if search == True %}
     {% for game in rawg_api.results %}
     <div class="container">
-      <div class="col s12 m7">
-        <div class="card blue-grey darken-1">
+      <div class="card blue-card main-search">
+        <div class="card">
           <div class="card-image">
             <img src="{{game.background_image}}">
             <span class="card-title">{{game.name}}</span>
@@ -95,13 +94,14 @@
 
               <div class="content-contain">
                 <div class="contain-cover">
-
                   <img src="{{bing_api.entities.value.0.image.hostPageUrl}}" alt="{{game.name}} Cover" class="cover">
                   <br>
-                  <p><span>Genre: </span>{{bing_api.entities.value.0.entityPresentationInfo.entityTypeDisplayHint}}</p>
+
 
                 </div>
                 <div class="contain-description">
+                  <p><span>Genre: </span>{{bing_api.entities.value.0.entityPresentationInfo.entityTypeDisplayHint}}</p>
+                  <p><span>Release Date: </span> {{game.released}}</p>
                   <p>{{bing_api.entities.value.0.description}}</p>
                 </div>
 
@@ -126,7 +126,7 @@
     <!-------------------- BING NEWS ----------------->
 
     <div class="container">
-      <div class="card item-contain blue-grey darken-1">
+      <div class="card item-contain blue-card">
       {% for article in bing_api.news.value %}
         <div class="card amazon">
           <div class="card-image">
@@ -146,7 +146,7 @@
     </div>
 
     <div class="container">
-      <div class="card item-contain blue-grey darken-1">
+      <div class="card item-contain blue-card">
           {% for image in bing_api.images.value %}
             <div class="card amazon">
               <div class="card-image">
@@ -159,7 +159,7 @@
     </div>
 
     <div class="container">
-      <div class="card item-contain blue-grey darken-1">
+      <div class="card item-contain blue-card">
 
           {% for video in bing_api.videos.value %}
 
@@ -170,4 +170,5 @@
         {% endfor %}
       </div>
     </div>
+  {% endif %}
 {%endblock %}

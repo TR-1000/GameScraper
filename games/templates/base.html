@@ -9,12 +9,12 @@
     <title>GameScrape</title>
   </head>
   <body>
-    <header>
-    </header>
+    <!-- <header>
+    </header> -->
     <!-- navigation bar -->
     <nav>
     <div class="nav-wrapper">
-      <a href="{% url 'home' %}" class="brand-logo center">GameScrape</a>
+      <a href="{% url 'home' %}" class="brand-logo center">Games<span class="span-blue">Scrape</span></a>
       <ul id="nav-mobile" class="left">
         <li>
           <form action="{% url 'home' %}" method="POST">
@@ -33,12 +33,14 @@
     </div>
   </nav>
 
+  <main>
+
 
 
 {% block content %}
  <!-- this is where the other pages content will be -->
 {% endblock %}
-
+  </main>
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </html>

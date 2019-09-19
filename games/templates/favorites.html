@@ -2,8 +2,9 @@
 {% block content %}
 
 <div class="container">
-  
+
     <div class="col s12 m8 offset-m1 xl7 offset-xl1">
+      <!-- Form to add games -->
       <form id="favorites_form" action="{% url 'favorites' %}" method="POST">
         <label  for="title">
         {% csrf_token %}
@@ -16,23 +17,13 @@
     </div>
   </div>
 
-</div>
-
-<!-- Form to add games -->
-
-
-
-  <!-- {{games}} -->
-
-
 <h1 id="favorites">Favorite Games</h1>
-
 
 <div class="fav_container">
   {% for game in games %}
   <div class="container">
     <div class="col s12 m6">
-      <div class="card blue-grey darken-1">
+      <div class="card blue-card">
         <div class="card-content white-text">
 
           <div class="card-image">
