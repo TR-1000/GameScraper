@@ -146,33 +146,13 @@
     {% if amazon_search == None %}
     <div class="container">
       <div class=" card item-contain blue-card">
-      <h3 class="favorites">Amazon is being a douche. Try reloading</h3>
+      <h3 class=favorites>Amazon is being a douche. Try reloading</h3>
       </div>
     </div>
     {% else %}
       <div class="container">
         <div class=" card item-contain blue-card">
-          <h2 id="favorites" >Amazon's top search results for <!-- Steam search -->
-          <div class="container">
-            <div class=" card item-contain blue-card">
-              <h2 id="favorites" >Steam's top results for {{game_title}}</h2>
-                {% for item in steam_search %}
-                <div class="card amazon">
-                  <div class="card-image">
-                    <img src="{{item.image}}">
-                  </div>
-                  <div class="card-stacked">
-                    <div class="card-content">
-                      <h5>{{item.title}}</h5>
-                      <h6>Released: {{item.released}}</h6>
-                      <h6>{{item.price}}</h6>
-                      <a class="card-action" href="{{item.url}}" target="_blank" ><h6>Steam Link</h6></a>
-                    </div>
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
-            </div></h2>
+          <h2 id="favorites" >Amazon's top search results for</h2>
             {% for item in amazon_search %}
             <div class="card horizontal amazon">
               <div class="card-image">
