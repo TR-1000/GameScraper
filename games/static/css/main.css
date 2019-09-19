@@ -118,12 +118,19 @@ nav .brand-logo {
 }
 
 #favorites {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-family: 'Russo One', sans-serif;
   text-align: center;
   color: #fed700;
+  width: 80%
 }
 
 #favorites_form {
   background-color: white;
+
 }
 
 nav .brand-logo {

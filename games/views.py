@@ -65,8 +65,6 @@ def home(request):
                 price = "Price NA"
             else:
                 price = price_span[0].text
-                print(title)
-                print(price)
                 amazon_featured.append({
                 'title' : title,
                 'image' : image,

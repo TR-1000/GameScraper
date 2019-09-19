@@ -6,6 +6,7 @@
   {% if search == False %}
     <div class="container">
       <div class=" card item-contain blue-card">
+        <h2 id="favorites" >Amazon's top results for Video Games</h2>
           {% for item in amazon_featured %}
           <div class="card horizontal amazon">
             <div class="card-image">
@@ -15,6 +16,7 @@
               <div class="card-content">
                 <h5>{{item.title}}</h5>
                 <h6>{{item.price}}</h6>
+                <a class="card-action" href="{{article.url}}" target="_blank" ><h6>Amazon Link</h6></a>
               </div>
             </div>
           </div>
@@ -26,6 +28,7 @@
 
     <div class="container">
       <div class=" card item-contain blue-card">
+        <h2 id="favorites">Latest News from Steam</h2>
         {% for item in steam_news %}
           <div class="card amazon">
             <div class="card-image">
@@ -33,16 +36,16 @@
             </div>
             <div class="card-content">
               <h5>{{item.title}}</h5>
+              <a class="card-action" href="{{article.url}}" target="_blank" ><h6>Steam Link</h6></a>
             </div>
-
           </div>
-
           {% endfor %}
         </div>
       </div>
 
       <div class="container">
         <div class=" card item-contain blue-card">
+          <h2 id="favorites">Latest News from Gamepedia</h2>
           {% for article in gamepedia_articles %}
           <div class="card amazon">
             <div class="card-image">
@@ -53,9 +56,7 @@
               <h5>Source: Gamepedia</h5>
               <h6>{{article.author}}</h6>
               <small><h6>{{article.time}}</h6></small>
-            </div>
-            <div class="card-action">
-              <a href="{{article.url}}" target="_blank" >Read More at Gamepedia</a>
+              <a href="{{article.url}}" target="_blank" ><h6>Read More at Gamepedia</h6></a>
             </div>
           </div>
           {% endfor %}
@@ -89,28 +90,18 @@
                   <i class="material-icons right">add_circle</i>
                 </button>
               </form>
-
               <br>
-
               <div class="content-contain">
                 <div class="contain-cover">
                   <img src="{{bing_api.entities.value.0.image.hostPageUrl}}" alt="{{game.name}} Cover" class="cover">
                   <br>
-
-
                 </div>
                 <div class="contain-description">
                   <p><span>Genre: </span>{{bing_api.entities.value.0.entityPresentationInfo.entityTypeDisplayHint}}</p>
                   <p><span>Release Date: </span> {{game.released}}</p>
                   <p>{{bing_api.entities.value.0.description}}</p>
                 </div>
-
-
               </div>
-
-
-
-
             </div>
             {% if game.clip != null %}
               <div class="card-video">
@@ -127,6 +118,7 @@
 
     <div class="container">
       <div class="card item-contain blue-card">
+        <h2 id="favorites">Bing News Results</h2>
       {% for article in bing_api.news.value %}
         <div class="card amazon">
           <div class="card-image">
@@ -145,8 +137,10 @@
       </div>
     </div>
 
+    <!-- Bing Images -->
     <div class="container">
       <div class="card item-contain blue-card">
+        <h2 id="favorites">Bing Image Results</h2>
           {% for image in bing_api.images.value %}
             <div class="card amazon">
               <div class="card-image">
@@ -160,13 +154,9 @@
 
     <div class="container">
       <div class="card item-contain blue-card">
-
+        <h2 id="favorites">Bing Video Results</h2>
           {% for video in bing_api.videos.value %}
-
-
           <iframe class="bing_frame" src="{{video.webSearchUrl}}" width="" height=""></iframe>
-
-
         {% endfor %}
       </div>
     </div>
