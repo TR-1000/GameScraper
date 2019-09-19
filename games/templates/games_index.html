@@ -2,6 +2,8 @@
 {% block content %}
 
 
+  <!------ Home View ------------------------------------------------->
+  {% if search == False %}
   <div class="container">
     <div class=" card item-contain blue-grey darken-1">
         {% for item in amazon_featured %}
@@ -61,6 +63,13 @@
       {% endfor %}
     </div>
   </div>
+  {% endif %}
+
+
+
+
+
+    <!------------------- SEARCH VIEW  ----------------------------->
 
     {% for game in rawg_api.results %}
     <div class="container">
@@ -114,6 +123,7 @@
     {% endfor %}
 
 
+    <!-------------------- BING NEWS ----------------->
 
     <div class="container">
       <div class="card item-contain blue-grey darken-1">
@@ -121,9 +131,10 @@
         <div class="card amazon">
           <div class="card-image">
             <img src="{{ article.image.contentUrl }}">
-            <span class="card-title">{{ article.name }}</span>
+
           </div>
           <div class="card-content">
+            <span class="article-title">{{ article.name }}</span>
             <p>{{ article.description}}</p>
           </div>
           <div class="card-action">
@@ -159,13 +170,4 @@
         {% endfor %}
       </div>
     </div>
-
-
-  <!-- <h3>Bing Videos</h3>
-  <div class="container">
-    {% for video in bing_api.videos.value %}
-      <iframe src="{{video.webSearchUrl}}" width="" height=""></iframe>
-    {% endfor %}
-  </div> -->
-
 {%endblock %}

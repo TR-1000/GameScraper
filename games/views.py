@@ -37,7 +37,7 @@ def home(request):
         # bing_api = bing_api_response.json()
         bing_api = json.loads(bing_api_response.content)
 
-        return render(request, 'games_index.html', {'rawg_api': rawg_api, 'bing_api': bing_api})
+        return render(request, 'games_index.html', {'search': True, 'rawg_api': rawg_api, 'bing_api': bing_api})
 
         #return render(request, 'games_index.html', {'rawg_api': rawg_api})
 
@@ -45,6 +45,7 @@ def home(request):
 
         import requests
         from bs4 import BeautifulSoup
+
 
         #Amazon Scrape
         amazon_page = requests.get("https://www.amazon.com/s?k=video+games&rh=n%3A468642&dc&qid=1568839232&rnid=2941120011&ref=sr_nr_n_1",headers={"User-Agent":"Defined"})
@@ -111,7 +112,7 @@ def home(request):
             })
 
         return render(request, 'games_index.html',
-        {'gamepedia_articles': gamepedia_articles, 'steam_news': steam_news, 'amazon_featured': amazon_featured, 'rawg_api': {
+        {'search' : False, 'gamepedia_articles': gamepedia_articles, 'steam_news': steam_news, 'amazon_featured': amazon_featured, 'rawg_api': {
 "count": 102,
 "next": "https://api.rawg.io/api/games?page=2&page_size=1&search=fallout+76",
 "previous": None,

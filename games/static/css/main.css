@@ -83,9 +83,16 @@ nav .brand-logo {
 }
 
 .card .card-title {
-  font-size: 35px;
+  font-size: 25px;
   font-weight: 500;
   text-shadow: 2px 2px #130202;
+}
+
+.article-title {
+  font-size: 25px;
+  font-weight: 500;
+  margin-bottom: 10px;
+
 }
 
 #search {
