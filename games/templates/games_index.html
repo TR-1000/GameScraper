@@ -4,6 +4,8 @@
 
   <!------ Home View ------------------------------------------------->
   {% if search == False %}
+
+    <!-- Amazon -->
     <div class="container">
       <div class=" card item-contain blue-card">
         <h2 id="favorites" >Amazon's top results for Video Games</h2>
@@ -23,9 +25,8 @@
           {% endfor %}
         </div>
       </div>
-    </div>
 
-
+    <!-- Steam -->
     <div class="container">
       <div class=" card item-contain blue-card">
         <h2 id="favorites">Latest News from Steam</h2>
@@ -36,13 +37,14 @@
             </div>
             <div class="card-content">
               <h5>{{item.title}}</h5>
-              <a class="card-action" href="{{article.url}}" target="_blank" ><h6>Steam Link</h6></a>
+              <a href="{{item.url}}" target="_blank"><h6>Steam Link</h6></a>
             </div>
           </div>
           {% endfor %}
         </div>
       </div>
 
+      <!-- Gamepedia -->
       <div class="container">
         <div class=" card item-contain blue-card">
           <h2 id="favorites">Latest News from Gamepedia</h2>
@@ -70,6 +72,10 @@
 
     <!------------------- SEARCH VIEW  ----------------------------->
 
+
+
+
+  <!-- Rawg API -->
   {% if search == True %}
     {% for game in rawg_api.results %}
     <div class="container">
@@ -98,7 +104,9 @@
                 </div>
                 <div class="contain-description">
                   <p><span>Genre: </span>{{bing_api.entities.value.0.entityPresentationInfo.entityTypeDisplayHint}}</p>
+                  <br>
                   <p><span>Release Date: </span> {{game.released}}</p>
+                  <br>
                   <p>{{bing_api.entities.value.0.description}}</p>
                 </div>
               </div>
@@ -113,9 +121,78 @@
       </div>
     {% endfor %}
 
+    <!-- Steam search -->
+    <div class="container">
+      <div class=" card item-contain blue-card">
+        <h2 id="favorites" >Steam's top results for {{game_title}}</h2>
+          {% for item in steam_search %}
+          <div class="card amazon">
+            <div class="card-image">
+              <img src="{{item.image}}">
+            </div>
+            <div class="card-stacked">
+              <div class="card-content">
+                <h5>{{item.title}}</h5>
+                <h6>Released: {{item.released}}</h6>
+                <h6>{{item.price}}</h6>
+                <a class="card-action" href="{{item.url}}" target="_blank" ><h6>Steam Link</h6></a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
 
-    <!-------------------- BING NEWS ----------------->
+    {% if amazon_search == None %}
+    <div class="container">
+      <div class=" card item-contain blue-card">
+      <h3 class="favorites">Amazon is being a douche. Try reloading</h3>
+      </div>
+    </div>
+    {% else %}
+      <div class="container">
+        <div class=" card item-contain blue-card">
+          <h2 id="favorites" >Amazon's top search results for <!-- Steam search -->
+          <div class="container">
+            <div class=" card item-contain blue-card">
+              <h2 id="favorites" >Steam's top results for {{game_title}}</h2>
+                {% for item in steam_search %}
+                <div class="card amazon">
+                  <div class="card-image">
+                    <img src="{{item.image}}">
+                  </div>
+                  <div class="card-stacked">
+                    <div class="card-content">
+                      <h5>{{item.title}}</h5>
+                      <h6>Released: {{item.released}}</h6>
+                      <h6>{{item.price}}</h6>
+                      <a class="card-action" href="{{item.url}}" target="_blank" ><h6>Steam Link</h6></a>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div></h2>
+            {% for item in amazon_search %}
+            <div class="card horizontal amazon">
+              <div class="card-image">
+                <img src="{{item.image}}">
+              </div>
+              <div class="card-stacked">
+                <div class="card-content">
+                  <h5>{{item.title}}</h5>
+                  <h6>{{item.price}}</h6>
+                  <a class="card-action" href="{{article.url}}" target="_blank" ><h6>Amazon Link</h6></a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+    {% endif%}
 
+
+    <!-- BING NEW -->
     <div class="container">
       <div class="card item-contain blue-card">
         <h2 id="favorites">Bing News Results</h2>
@@ -152,6 +229,7 @@
       </div>
     </div>
 
+    <!-- Bing Video -->
     <div class="container">
       <div class="card item-contain blue-card">
         <h2 id="favorites">Bing Video Results</h2>
