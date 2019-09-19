@@ -42,13 +42,57 @@ def home(request):
         #return render(request, 'games_index.html', {'rawg_api': rawg_api})
 
     else:
+
         import requests
         from bs4 import BeautifulSoup
 
+        #Amazon Scrape
+        amazon_page = requests.get("https://www.amazon.com/s?k=video+games&rh=n%3A468642&dc&qid=1568839232&rnid=2941120011&ref=sr_nr_n_1",headers={"User-Agent":"Defined"})
+
+        amazon_soup = BeautifulSoup(amazon_page.content, "html.parser")
+
+        amazon_featured = []
+
+        amazon_results = amazon_soup.select("div.s-result-list.s-search-results.sg-row")
+        results = amazon_results[0].select("div.a-section.a-spacing-medium")
+        for result in results:
+            title = result.h2.text
+            image = result.img.get('src')
+            url = "https://www.amazon.com/" + result.a.get('href')
+            price_span = result.select("span.a-offscreen")
+            if price_span == []:
+                price = "Price NA"
+            else:
+                price = price_span[0].text
+                print(title)
+                print(price)
+                amazon_featured.append({
+                'title' : title,
+                'image' : image,
+                'url' : url,
+                'price' : price
+                })
+
+        #Steam Scrape
+        steam_news_page = requests.get("https://store.steampowered.com/news/",headers={"User-Agent":"Defined"})
+        soup = BeautifulSoup(steam_news_page.text, "html.parser")
+        steam_news = []
+        steam_results = soup.select("div.body")
+        for result in steam_results:
+            if result.a != None:
+                url = result.a.get('href')
+                title = result.text.strip()
+                image = result.img.get('src')
+                steam_news.append({
+                'url' : url,
+                'title' : title,
+                'image' : image,
+                })
+
+
+        #Gamepedia Scrape
         gamepedia_news_page = requests.get("https://www.gamepedia.com/",headers={"User-Agent":"Defined"})
-
         gamepedia_soup = BeautifulSoup(gamepedia_news_page.text, "html.parser")
-
         gamepedia_articles = []
         gamepedia_results = gamepedia_soup.select('article')
         #print(results)
@@ -66,7 +110,8 @@ def home(request):
             'image' : image
             })
 
-        return render(request, 'games_index.html', {'game_search': 'Enter a game title', 'gamepedia_articles': gamepedia_articles, 'rawg_api': {
+        return render(request, 'games_index.html',
+        {'gamepedia_articles': gamepedia_articles, 'steam_news': steam_news, 'amazon_featured': amazon_featured, 'rawg_api': {
 "count": 102,
 "next": "https://api.rawg.io/api/games?page=2&page_size=1&search=fallout+76",
 "previous": None,

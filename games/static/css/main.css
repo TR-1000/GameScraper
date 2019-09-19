@@ -35,21 +35,51 @@ nav .brand-logo {
 }
 
 .bing_frame {
-  width: 95%;
-  height: 1000px;
-  margin: 0 auto;
+  min-width: 80%;
+  min-height:400px;
+  margin: 15px;
 }
 
 .card {
   margin-bottom: 50px;
+  padding: 10px;
 }
 
+.item-contain {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.amazon {
+  width: 40%;
+}
+
+.content-contain {
+  display: flex;
+  flex: row;
+  justify-content: space-around;
+  max-height: 415px;
+  font-size:
+  padding: 30px;
+
+}
+
+.contain-cover {
+  margin-right: 20px;
+}
 .card-video {
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  align-items: baseline;
   padding: 20px;
+}
+
+
+.cover {
+  max-height: 315px;
 }
 
 .card .card-title {
