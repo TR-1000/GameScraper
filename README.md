@@ -11,7 +11,7 @@ Scraping the web for video game data.
 
 
 # Issues
-* Sometimes requests don't got through the first time around.
+* Sometimes requests don't got through the first time.
 
 
 # Roadmap
