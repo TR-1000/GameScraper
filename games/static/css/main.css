@@ -74,10 +74,19 @@ footer {
 
 .amazon {
   width: 40%;
+  max-height: 540px;
 }
 
 .steam {
   width: 80%;
+}
+
+.gamespot {
+  width: 24%;
+}
+
+.gamespot-search {
+  width: 30%
 }
 
 .content-contain {

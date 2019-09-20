@@ -19,6 +19,31 @@ def home(request):
         #set variable for searched game
         game_title = request.POST['game_search']
 
+        #Gamespot Search
+        gamespot_search_page = requests.get("https://www.gamespot.com/search/?header=1&q=" + game_title,headers={"User-Agent":"Defined"})
+
+        gamespot_search_soup = BeautifulSoup(gamespot_search_page.content, "html.parser")
+
+        gamespot_search_results = gamespot_search_soup.select("li.media")
+        #print(gamespot_search_results)
+
+        gamespot_search = []
+
+        for result in gamespot_search_results:
+            title = result.span.a.text
+            url = "https://www.gamespot.com" + result.a.get('href')
+            image = result.img.get('src')
+            released = result.time.span.text
+            if result.p != None:
+                description = result.p.text.strip()
+            gamespot_search.append({
+                'title' : title,
+                'url' : url,
+                'image' : image,
+                'released' : released,
+                'description': description
+                })
+
         #Steam search scrape
         steam_search_page = requests.get("https://store.steampowered.com/search/?term=" + game_title,headers={"User-Agent":"Defined"})
 
@@ -52,7 +77,7 @@ def home(request):
 
 
         #Amazon scrape search request
-        amazon_page = requests.get("https://www.amazon.com/s?k=" + game_title + "&i=videogames&crid=3FG31WZT8NAUW&sprefix=super+%2Caps%2C159&ref=nb_sb_ss_i_1_6",headers={"User-Agent":"Defined"})
+        amazon_page = requests.get("https://www.amazon.com/s?k=" + game_title + "&i=videogames&i=videogames&ref=nb_sb_noss",headers={"User-Agent":"Defined"})
         amazon_soup = BeautifulSoup(amazon_page.content, "html.parser")
         amazon_results = amazon_soup.select("div.s-result-list.s-search-results.sg-row")
         try:
@@ -67,8 +92,8 @@ def home(request):
                     price = "NA"
                 else:
                     price = price_span[0].text
-                    print(title)
-                    print(price)
+                    #print(title)
+                    #print(price)
                     amazon_search.append({
                     'title' : title,
                     'image' : image,
@@ -98,7 +123,10 @@ def home(request):
         # bing_api = bing_api_response.json()
         bing_api = json.loads(bing_api_response.content)
 
-        return render(request, 'games_index.html', {'search': True, 'game_title' : game_title, 'rawg_api': rawg_api, 'bing_api': bing_api, 'amazon_search': amazon_search, 'steam_search': steam_search})
+        ##########################################
+        ##########################################
+        ##########################################
+        return render(request, 'games_index.html', {'search': True, 'game_title' : game_title, 'rawg_api': rawg_api, 'bing_api': bing_api, 'amazon_search': amazon_search, 'steam_search': steam_search, 'gamespot_search': gamespot_search})
 
     else:
 
@@ -166,30 +194,36 @@ def home(request):
                 'image' : image,
                 })
 
+        #Gamespot search
+        gamespot_news_page = requests.get("https://www.gamespot.com/",headers={"User-Agent":"Defined"})
+        gamespot_news_soup = BeautifulSoup(gamespot_news_page.content, "html.parser")
+        gamespot_news_results = gamespot_news_soup.select("section.editorial.river.js-load-forever-container")
+        #print(steam_search_results)
+        gamespot_news = []
 
-        #Gamepedia Scrape
-        gamepedia_news_page = requests.get("https://www.gamepedia.com/",headers={"User-Agent":"Defined"})
-        gamepedia_soup = BeautifulSoup(gamepedia_news_page.text, "html.parser")
-        gamepedia_articles = []
-        gamepedia_results = gamepedia_soup.select('article')
-        #print(results)
-        for result in gamepedia_results:
-            url = result.a.get('href')
-            image = result.a.img.get('src')
-            title = result.h2.a.text
-            author = result.span.text
-            time = result.abbr.text
-            gamepedia_articles.append({
-            'title' : title,
-            'author' : author,
-            'time' : time,
-            'url' : url,
-            'image' : image
+        article_section = gamespot_news_results[0]
+        #print(article_section)
+        gamespot_articles = article_section.select("article")
+        #print(gamespot_articles)
+        for result in gamespot_articles:
+            title = result.h3.text
+            url = "https://www.gamespot.com" + result.a.get('href')
+            image = result.img.get('src')
+            description = result.p.text
+            gamespot_news.append({
+                'title':title,
+                'description':description,
+                'url':url,
+                'image':image,
             })
 
+        ##########################################
+        ##########################################
+        ##########################################
         return render(request, 'games_index.html',
-        {'search' : False, 'gamepedia_articles': gamepedia_articles, 'steam_news': steam_news, 'amazon_featured': amazon_featured, 'ign_news' : ign_news})
+        {'search' : False, 'gamespot_news': gamespot_news, 'steam_news': steam_news, 'amazon_featured': amazon_featured, 'ign_news' : ign_news})
 
+##############################################################################################################
 
 def favorites(request):
     form = GameForm(request.POST or None)
@@ -202,6 +236,9 @@ def favorites(request):
     games = Game.objects.all()
     return render(request, 'favorites.html', {'form': form, 'games': games})
 
+
+
+##############################################################################################################
 
 def update(request, game_id):
     games = Game.objects.all()
@@ -216,6 +253,7 @@ def update(request, game_id):
 
     return render(request, 'update.html', {'form': form, 'games': games})
 
+##############################################################################################################
 
 def delete(request, game_id):
     game = Game.objects.get(pk=game_id)
