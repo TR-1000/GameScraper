@@ -1,4 +1,4 @@
-# [GameScrape](https://mighty-oasis-10011.herokuapp.com/)
+# [GameScraper](https://mighty-oasis-10011.herokuapp.com/)
 Scraping the web for video game data.
 
 ![](https://raw.githubusercontent.com/TR-1000/my_portfolio/master/projects/static/img/project3.png)
