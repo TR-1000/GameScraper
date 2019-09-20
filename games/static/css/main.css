@@ -17,7 +17,7 @@ header {
 nav {
   position: fixed;
   top: 0;
-  z-index: 1;
+  z-index: 2;
 }
 
 nav, ul {
@@ -25,6 +25,10 @@ nav, ul {
   height: 104px;
   line-height: 98px;
   margin-bottom: 100px;
+}
+
+input {
+  padding: 25px;
 }
 
 
@@ -51,7 +55,7 @@ footer {
 }
 
 .btn:hover, .btn-large:hover, .btn-small:hover {
-    background-color: #587c9a;
+  background-color: #587c9a;
 }
 
 .bing_frame {
@@ -98,6 +102,8 @@ footer {
   padding: 30px;
 }
 
+
+
 .contain-cover {
   margin-right: 20px;
 }
@@ -132,7 +138,10 @@ footer {
   font-weight: 500;
   margin-bottom: 10px;
 }
-
+.comment {
+  color: #ffffff;
+  font-family: sans-serif;
+}
 #search {
   height: 104px
 }
@@ -150,6 +159,7 @@ footer {
 
 #favorites_form {
   background-color: white;
+  padding: 25px;
 }
 
 nav .brand-logo {

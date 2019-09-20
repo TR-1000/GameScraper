@@ -30,6 +30,7 @@
             <img class=favorite_image src="{{game.image}}">
 
           <span class="card-title"><h4>{{game}}</h4></span>
+
           <form action="{% url 'home' %}" method="POST">
             {% csrf_token %}
             <input type="hidden" name="game_search" value="{{game}}">
@@ -37,10 +38,13 @@
              <i class="material-icons right">info</i>
            </button>
           </form>
-
           </div>
         </div>
         <div class="card-action">
+          <div class="comment">
+            <h4><span style="font-size:150%;color:red;">&hearts;</span><span> by </span>{{game.name}}</h4>
+            <p>{{game.comment}}</p>
+          </div>
           <a href="{% url 'update' game.id %}">Edit Game</a>
         </div>
       </div>

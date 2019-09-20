@@ -33,15 +33,18 @@ def home(request):
             title = result.span.a.text
             url = "https://www.gamespot.com" + result.a.get('href')
             image = result.img.get('src')
-            released = result.time.span.text
+            try:
+                released = result.time.span.text
+            except:
+                released = ''
             if result.p != None:
                 description = result.p.text.strip()
+                print(description)
             gamespot_search.append({
                 'title' : title,
                 'url' : url,
                 'image' : image,
-                'released' : released,
-                'description': description
+                'released' : released
                 })
 
         #Steam search scrape
@@ -139,7 +142,6 @@ def home(request):
         ign_soup = BeautifulSoup(ign_page.content, "html.parser")
 
         ign_results = ign_soup.select("article.jsx-1665423064.card")
-        #print(steam_search_results)
 
         ign_news = []
 
@@ -180,8 +182,10 @@ def home(request):
 
         #Steam News Scrape
         steam_news_page = requests.get("https://store.steampowered.com/news/",headers={"User-Agent":"Defined"})
+
         soup = BeautifulSoup(steam_news_page.text, "html.parser")
         steam_news = []
+
         steam_results = soup.select("div.body")
         for result in steam_results:
             if result.a != None:
@@ -200,7 +204,6 @@ def home(request):
         gamespot_news_results = gamespot_news_soup.select("section.editorial.river.js-load-forever-container")
         #print(steam_search_results)
         gamespot_news = []
-
         article_section = gamespot_news_results[0]
         #print(article_section)
         gamespot_articles = article_section.select("article")
