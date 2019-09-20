@@ -76,6 +76,10 @@ footer {
   width: 40%;
 }
 
+.steam {
+  width: 80%;
+}
+
 .content-contain {
   display: flex;
   flex: row;
