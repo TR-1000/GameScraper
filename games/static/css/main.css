@@ -32,6 +32,15 @@ nav .brand-logo {
   font-family: 'Press Start 2P', cursive;
 }
 
+footer {
+  background: #212121;
+  height: 111px;
+}
+
+.wide {
+  width: 20%
+}
+
 .span-blue {
   color: #fed700
 }
