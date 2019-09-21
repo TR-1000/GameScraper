@@ -4,7 +4,7 @@ from django.db import models
 
 class Game(models.Model):
     title = models.CharField(max_length=60)
-    image = models.URLField(max_length=2083, blank=True)
+    image = models.URLField(max_length=2083)
     name = models.CharField(max_length=60, blank=True)
     comment = models.TextField(blank=True)
 

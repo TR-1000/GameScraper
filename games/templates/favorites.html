@@ -41,10 +41,14 @@
           </div>
         </div>
         <div class="card-action">
-          <div class="comment">
-            <h4><span style="font-size:150%;color:red;">&hearts;</span><span> by </span>{{game.name}}</h4>
-            <p>{{game.comment}}</p>
-          </div>
+
+            <div class="comment">
+              {% if game.name != ""  %}
+                <h4><span style="font-size:150%;color:red;">&hearts;</span><span> by </span>{{game.name}}</h4>
+              {% endif %}
+              <p>{{game.comment}}</p>
+            </div>
+
         </div>
         <div class="card-action">
           <a href="{% url 'update' game.id %}">Edit Game</a>
