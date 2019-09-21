@@ -234,9 +234,8 @@ def favorites(request):
 
         if form.is_valid():
             form.save()
-            messages.success(request, ("This game has been added to your favorites"))
             return redirect('favorites')
-    games = Game.objects.all()
+    games = Game.objects.all().order_by('-id')
     return render(request, 'favorites.html', {'form': form, 'games': games})
 
 
