@@ -21,29 +21,46 @@
 
 <h1 id="favorites">Favorite Games</h1>
 
-{% for game in games %}
-<div class="container">
-  <div class="col s12 m6">
-    <div class="card blue-card">
-      <div class="card-content white-text">
-        <span class="card-title"><h4>{{game}}</h4></span>
-        <form action="{% url 'home' %}" method="POST">
-          {% csrf_token %}
-          <input type="hidden" name="game_search" value="{{game}}">
-          <button class="btn waves-effect waves-light" type="submit" name="action">Get Info
-           <i class="material-icons right">info</i>
-         </button>
-        </form>
-      </div>
-      <div class="card-action">
-        <a href="{% url 'delete' game.id %}">remove from favorites</a>
+<div class="fav_container">
+  {% for game in games %}
+  <div class="container">
+    <div class="col s12 m6">
+      <div class="card blue-card">
+        <div class="card-content white-text">
+
+          <div class="card-image">
+            <img class=favorite_image src="{{game.image}}">
+
+          <span class="card-title"><h4>{{game}}</h4></span>
+
+          <form action="{% url 'home' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="game_search" value="{{game}}">
+            <button class="btn waves-effect waves-light" type="submit" name="action">Get Info
+             <i class="material-icons right">info</i>
+           </button>
+          </form>
+          </div>
+        </div>
+        <div class="card-action">
+
+            <div class="comment">
+              {% if game.name != ""  %}
+                <h4><span style="font-size:150%;color:red;">&hearts;</span><span> by </span>{{game.name}}</h4>
+              {% endif %}
+              <p>{{game.comment}}</p>
+            </div>
+
+        </div>
+        <div class="card-action">
+          <a href="{% url 'delete' game.id %}">remove from favorites</a>
+          <a href="{% url 'update' game.id %}">Edit Game</a>
+        </div>
       </div>
     </div>
   </div>
+  {% endfor %}
 </div>
 
-{% endfor %}
-
-</div>
 
 {% endblock %}

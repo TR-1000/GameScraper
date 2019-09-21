@@ -243,7 +243,7 @@ def favorites(request):
 ##############################################################################################################
 
 def update(request, game_id):
-    games = Game.objects.all()
+    games = Game.objects.all().order_by('-id')
     game = Game.objects.get(pk=game_id)
     form = GameForm(request.POST or None, instance=game)
     if form.is_valid():
