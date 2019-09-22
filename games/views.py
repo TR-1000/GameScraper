@@ -30,22 +30,28 @@ def home(request):
         gamespot_search = []
 
         for result in gamespot_search_results:
-            title = result.span.a.text
-            url = "https://www.gamespot.com" + result.a.get('href')
-            image = result.img.get('src')
             try:
-                released = result.time.span.text
+
+                title = result.span.a.text
+
+                url = "https://www.gamespot.com" + result.a.get('href')
+                image = result.img.get('src')
+                try:
+                    released = result.time.span.text
+                except:
+                    released = ''
+                    if result.p != None:
+                        description = result.p.text.strip()
+                        print(description)
+                        gamespot_search.append({
+                        'title' : title,
+                        'url' : url,
+                        'image' : image,
+                        'released' : released
+                        })
             except:
-                released = ''
-            if result.p != None:
-                description = result.p.text.strip()
-                print(description)
-            gamespot_search.append({
-                'title' : title,
-                'url' : url,
-                'image' : image,
-                'released' : released
-                })
+                gamespot_search = []
+
 
         #Steam search scrape
         steam_search_page = requests.get("https://store.steampowered.com/search/?term=" + game_title,headers={"User-Agent":"Defined"})
@@ -114,22 +120,12 @@ def home(request):
         except Exception as error:
             rawg_api = "Error loading api data..."
 
-        #Bing api request
-        API_KEY = os.getenv("API_KEY")
-        subscription_key = API_KEY
-        assert subscription_key
-        search_url = "https://api.cognitive.microsoft.com/bing/v7.0/search"
-        headers = {"Ocp-Apim-Subscription-Key": subscription_key}
-        params = {"q": game_title}
-        bing_api_response = requests.get(search_url, headers=headers, params=params)
-        bing_api_response.raise_for_status()
-        # bing_api = bing_api_response.json()
-        bing_api = json.loads(bing_api_response.content)
+
 
         ##########################################
         ##########################################
         ##########################################
-        return render(request, 'games_index.html', {'search': True, 'game_title' : game_title, 'rawg_api': rawg_api, 'bing_api': bing_api, 'amazon_search': amazon_search, 'steam_search': steam_search, 'gamespot_search': gamespot_search})
+        return render(request, 'games_index.html', {'search': True, 'game_title' : game_title, 'rawg_api': rawg_api, 'amazon_search': amazon_search, 'steam_search': steam_search, 'gamespot_search': gamespot_search})
 
     else:
 
