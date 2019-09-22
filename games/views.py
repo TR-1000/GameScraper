@@ -30,27 +30,26 @@ def home(request):
         gamespot_search = []
 
         for result in gamespot_search_results:
+            title = result.span.a.text
+            print(title)
+            url = "https://www.gamespot.com" + result.a.get('href')
+            image = result.img.get('src')
             try:
-
-                title = result.span.a.text
-
-                url = "https://www.gamespot.com" + result.a.get('href')
-                image = result.img.get('src')
-                try:
-                    released = result.time.span.text
-                except:
-                    released = ''
-                    if result.p != None:
-                        description = result.p.text.strip()
-                        print(description)
-                        gamespot_search.append({
-                        'title' : title,
-                        'url' : url,
-                        'image' : image,
-                        'released' : released
-                        })
+                released = result.time.span.text
             except:
-                gamespot_search = []
+                released = ''
+            if result.p != None:
+                description = result.p.text.strip()
+                print(description)
+            gamespot_search.append({
+                'title' : title,
+                'url' : url,
+                'image' : image,
+                'released' : released
+                })
+
+
+
 
 
         #Steam search scrape
