@@ -30,10 +30,21 @@ def home(request):
         gamespot_search = []
 
         for result in gamespot_search_results:
-            title = result.span.a.text
+            try:
+                title = result.span.a.text
+            except:
+                title = ''
+
             print(title)
-            url = "https://www.gamespot.com" + result.a.get('href')
-            image = result.img.get('src')
+            try:
+                url = "https://www.gamespot.com" + result.a.get('href')
+            except:
+                url = ''
+
+            try:
+                image = result.img.get('src')
+            except:
+                image = '' 
             try:
                 released = result.time.span.text
             except:
