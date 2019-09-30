@@ -1,25 +1,171 @@
 body {
-  background-color: #dbdfe8;
+  background-color: #000;
+}
+
+main {
+  margin-top: 170px
+}
+
+header {
+  height: 500px;
+  background-color: black;
+  background-image: url("/static/img/Favorite_Video_Games.png");
+  background-repeat: no-repeat, repeat;
+  background-size: cover;
 }
 
 nav {
-  background: #000
+  position: fixed;
+  top: 0;
+  z-index: 2;
 }
 
-.cover {
-  width: 300px;
+nav, ul {
+  background: #212121;
+  height: 104px;
+  line-height: 98px;
+  margin-bottom: 100px;
+}
+
+input {
+  padding: 25px;
+}
+
+
+nav .brand-logo {
+  font-family: 'Press Start 2P', cursive;
+}
+
+footer {
+  background: #212121;
+  height: 111px;
+}
+
+.wide {
+  width: 20%
+}
+
+.span-blue {
+  color: #fed700
+}
+
+.btn, .btn-large, .btn-small {
+  background-color: #0d1216;
+
+}
+
+.btn:hover, .btn-large:hover, .btn-small:hover {
+  background-color: #587c9a;
 }
 
 .bing_frame {
-  width: 95%;
-  height: 1000px;
+  min-width: 80%;
+  min-height:400px;
+  margin: 15px;
+}
+
+.card {
+  margin-bottom: 50px;
+  padding: 10px;
+}
+
+.item-contain {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.amazon {
+  width: 40%;
+  max-height: 540px;
+}
+
+.steam {
+  width: 80%;
+}
+
+.gamespot {
+  width: 24%;
+}
+
+.gamespot-search {
+  width: 30%
+}
+
+.content-contain {
+  display: flex;
+  flex: row;
+  justify-content: space-around;
+  max-height: 415px;
+  font-size:
+  padding: 30px;
+}
+
+
+
+.contain-cover {
+  margin-right: 20px;
+}
+.card-video {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: baseline;
+  padding: 20px;
+}
+
+.blue-card {
+  background-color: #0e60d4
+}
+
+.main-search {
+  padding: 25px;
+}
+
+.cover {
+  max-height: 315px;
+}
+
+.card .card-title {
+  font-size: 25px;
+  font-weight: 500;
+  text-shadow: 2px 2px #130202;
+}
+
+.article-title {
+  font-size: 25px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.comment {
+  color: #ffffff;
+  font-family: sans-serif;
+}
+#search {
+  height: 104px
 }
 
 #favorites {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-family: 'Russo One', sans-serif;
   text-align: center;
-  color: #fff;
+  color: #fed700;
+  width: 80%
 }
 
 #favorites_form {
   background-color: white;
+  padding: 25px;
+}
+
+nav .brand-logo {
+    position: absolute;
+    color: #fff;
+    display: inline-block;
+    font-size: 4.1rem;
+    padding: 0;
 }
