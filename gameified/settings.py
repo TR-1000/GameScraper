@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'a85a2(5$8ejjklw96)w#vi)2eh4(f_^^rv(qa&#*v08cd(1-0w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['mighty-oasis-10011.herokuapp.com', 'localhost']
 

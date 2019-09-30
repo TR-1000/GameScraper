@@ -35,7 +35,6 @@ def home(request):
             except:
                 title = ''
 
-            print(title)
             try:
                 url = "https://www.gamespot.com" + result.a.get('href')
             except:
@@ -44,22 +43,22 @@ def home(request):
             try:
                 image = result.img.get('src')
             except:
-                image = '' 
+                image = ''
+
             try:
                 released = result.time.span.text
             except:
                 released = ''
+
             if result.p != None:
                 description = result.p.text.strip()
-                print(description)
+
             gamespot_search.append({
                 'title' : title,
                 'url' : url,
                 'image' : image,
                 'released' : released
                 })
-
-
 
 
 
@@ -96,7 +95,7 @@ def home(request):
 
 
         #Amazon scrape search request
-        amazon_page = requests.get("https://www.amazon.com/s?k=" + game_title + "&i=videogames&i=videogames&ref=nb_sb_noss",headers={"User-Agent":"Defined"})
+        amazon_page = requests.get("https://www.amazon.com/s?k=" + game_title + "&ref=nb_sb_noss_2",headers={"User-Agent":"Defined"})
         amazon_soup = BeautifulSoup(amazon_page.content, "html.parser")
         amazon_results = amazon_soup.select("div.s-result-list.s-search-results.sg-row")
         try:
@@ -105,7 +104,7 @@ def home(request):
             for result in results:
                 title = result.h2.text
                 image = result.img.get('src')
-                url = result.a.get('href')
+                url = "https://www.amazon.com" + result.a.get('href')
                 price_span = result.select("span.a-offscreen")
                 if price_span == []:
                     price = "NA"

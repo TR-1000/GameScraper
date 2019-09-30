@@ -18,7 +18,7 @@
               <div class="card-content">
                 <h5>{{item.title}}</h5>
                 <h6>{{item.price}}</h6>
-                <a class="card-action" href="{{article.url}}" target="_blank" ><h6>Amazon Link</h6></a>
+                <a class="card-action" href="{{item.url}}" target="_blank" ><h6>Amazon Link</h6></a>
               </div>
             </div>
           </div>
@@ -39,7 +39,7 @@
             <div class="card-stacked">
               <div class="card-content">
                 <h5>{{item.title}}</h5>
-                <a class="card-action" href="{{article.url}}" target="_blank" ><h6>More...</h6></a>
+                <a class="card-action" href="{{item.url}}" target="_blank" ><h6>More...</h6></a>
               </div>
             </div>
           </div>
@@ -128,7 +128,7 @@
                   <br>
                   <p><span>Release Date: </span> {{game.released}}</p>
                   <br>
-                  
+
                 </div>
               </div>
             </div>
@@ -184,16 +184,14 @@
         </div>
       </div>
 
+
+    <!-- Amazon search -->
     {% if amazon_search == None %}
-    <div class="container">
-      <div class=" card item-contain blue-card">
-      <h3 class=favorites>Amazon is being a douche. Try reloading</h3>
-      </div>
-    </div>
+
     {% else %}
       <div class="container">
         <div class=" card item-contain blue-card">
-          <h2 id="favorites" >Amazon's top search results for</h2>
+          <h2 id="favorites" >Amazon's top search results for {{game_title}}</h2>
             {% for item in amazon_search %}
             <div class="card horizontal amazon">
               <div class="card-image">
@@ -203,7 +201,8 @@
                 <div class="card-content">
                   <h5>{{item.title}}</h5>
                   <h6>{{item.price}}</h6>
-                  <a class="card-action" href="{{article.url}}" target="_blank" ><h6>Amazon Link</h6></a>
+                  <a class="card-action" href="{{item.url}}" target="_blank" ><h6>More...</h6></a>
+
                 </div>
               </div>
             </div>
@@ -212,8 +211,6 @@
         </div>
     {% endif%}
 
-
-    <!-- BING NEWS -->
 
   {% endif %}
 {%endblock %}
