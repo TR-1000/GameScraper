@@ -123,9 +123,11 @@
                   <br>
                 </div>
                 <div class="contain-description">
-
-
-                  <p><span>Release Date: </span> {{game.released}}</p>
+                  <strong>Genre:</strong>
+                  {% for genre in game.genres %}
+                  {{genre.name}}
+                  {% endfor %}
+                  <p><span><strong>Release Date:</strong></span> {{game.released}}</p>
                   <br>
                 </div>
               </div>
@@ -207,7 +209,6 @@
           </div>
         </div>
     {% endif%}
-
 
   {% endif %}
 {%endblock %}
