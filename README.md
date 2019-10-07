@@ -15,8 +15,8 @@ Scraping the web for video game data.
 
 
 # Roadmap
-* Save scrape results to the Database
-* User login
+* Save scrape results to the database
+* User login and ability to comment on other users favorites. 
 
 
 # Help Along The Way
