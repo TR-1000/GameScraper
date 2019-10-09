@@ -16,7 +16,8 @@ Scraping the web for video game data.
 
 # Roadmap
 * Save scrape results to the database
-* User login and ability to comment on other users favorites. 
+* User login and ability to comment on other users favorites.
+* Only the user who created the favorite can edit it.
 
 
 # Help Along The Way
