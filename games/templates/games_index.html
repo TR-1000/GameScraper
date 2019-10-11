@@ -5,87 +5,80 @@
   <!------ Home View ------------------------------------------------->
   {% if search == False %}
 
-    <!-- Amazon -->
-    <div class="container">
-      <div class=" card item-contain blue-card">
-        <h2 id="favorites" >Amazon's top results for Video Games</h2>
-          {% for item in amazon_featured %}
-          <div class="card horizontal amazon">
-            <div class="card-image">
-              <img src="{{item.image}}">
-            </div>
-            <div class="card-stacked">
-              <div class="card-content">
-                <h5>{{item.title}}</h5>
-                <h6>{{item.price}}</h6>
-                <a class="card-action" href="{{item.url}}" target="_blank" ><h6>More...</h6></a>
-              </div>
-            </div>
+<!-- Amazon -->
+<div class="container">
+  <div class=" card item-contain blue-card">
+    <h2 id="favorites" >Amazon's top results for Video Games</h2>
+      {% for item in amazon_featured %}
+      <div class="card horizontal amazon">
+        <div class="card-image">
+          <img src="{{item.image}}">
+        </div>
+        <div class="card-stacked">
+          <div class="card-content">
+            <h5>{{item.title}}</h5>
+            <h6>{{item.price}}</h6>
+            <a class="card-action" href="{{item.url}}" target="_blank" ><h6>More...</h6></a>
           </div>
-          {% endfor %}
         </div>
       </div>
-
-
-    <!-- ign_news -->
-    <div class="container">
-      <div class=" card item-contain blue-card">
-        <h2 id="favorites" >IGN Featured News</h2>
-          {% for item in ign_news %}
-          <div class="card horizontal amazon">
-            <div class="card-image">
-              <img src="{{item.image}}">
-            </div>
-            <div class="card-stacked">
-              <div class="card-content">
-                <h5>{{item.title}}</h5>
-                <a class="card-action" href="{{item.url}}" target="_blank" ><h6>More...</h6></a>
-              </div>
-            </div>
+      {% endfor %}
+    </div>
+  </div
+<!-- ign_news -->
+<div class="container">
+  <div class=" card item-contain blue-card">
+    <h2 id="favorites" >IGN Featured News</h2>
+      {% for item in ign_news %}
+      <div class="card horizontal amazon">
+        <div class="card-image">
+          <img src="{{item.image}}">
+        </div>
+        <div class="card-stacked">
+          <div class="card-content">
+            <h5>{{item.title}}</h5>
+            <a class="card-action" href="{{item.url}}" target="_blank" ><h6>More...</h6></a>
           </div>
-          {% endfor %}
         </div>
       </div>
-
-
-
-      <!-- Gamespot -->
-      <div class="container">
-        <div class=" card item-contain blue-card">
-          <h2 id="favorites">Latest News from Gamespot</h2>
-          {% for item in gamespot_news %}
-            <div class="card gamespot">
-              <div class="card-image">
-                <img src="{{item.image}}">
-              </div>
-              <div class="card-content">
-                <h5>{{item.title}}</h5>
-                <a href="{{item.url}}" target="_blank"><h6>More...</h6></a>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
+      {% endfor %}
+  </div>
+</div
+<!-- Gamespot -->
+<div class="container">
+  <div class=" card item-contain blue-card">
+    <h2 id="favorites">Latest News from Gamespot</h2>
+    {% for item in gamespot_news %}
+      <div class="card gamespot">
+        <div class="card-image">
+          <img src="{{item.image}}">
         </div>
-
-
-      <!-- Steam -->
-      <div class="container">
-        <div class=" card item-contain blue-card">
-          <h2 id="favorites">Latest News from Steam</h2>
-          {% for item in steam_news %}
-            <div class="card steam">
-              <div class="card-image">
-                <img src="{{item.image}}">
-              </div>
-              <div class="card-content">
-                <h5>{{item.title}}</h5>
-                <a href="{{item.url}}" target="_blank"><h6>More...</h6></a>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
+        <div class="card-content">
+          <h5>{{item.title}}</h5>
+          <a href="{{item.url}}" target="_blank"><h6>More...</h6></a>
         </div>
-  {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div
+<!-- Steam -->
+<div class="container">
+  <div class=" card item-contain blue-card">
+    <h2 id="favorites">Latest News from Steam</h2>
+    {% for item in steam_news %}
+      <div class="card steam">
+        <div class="card-image">
+          <img src="{{item.image}}">
+        </div>
+        <div class="card-content">
+          <h5>{{item.title}}</h5>
+          <a href="{{item.url}}" target="_blank"><h6>More...</h6></a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
 
 
 
@@ -96,85 +89,104 @@
 
 
 
-  <!-- Rawg API -->
-  {% if search == True %}
-    {% for game in rawg_api.results %}
-    <div class="container">
-      <div class="card blue-card main-search">
-        <div class="card">
+<!-- Rawg API -->
+{% if search == True %}
+  {% for game in rawg_api.results %}
+  <div class="container">
+    <div class="card blue-card main-search">
+      <div class="card">
+        <div class="card-image">
+          <img src="{{game.background_image}}">
+          <span class="card-title">{{game.name}}</span>
+        </div>
+        <div class="card-content">
+          <!-- Favorites form -->
+          <form action="{% url 'favorites' %}" method="POST">
+            {% csrf_token %}
+              <input id="image" value="{{game.background_image}}" name="image" type="hidden">
+              <input id="title" value="{{game.name}}" name="title" type="hidden" required>
+              <button class="btn" type="submit" name="action">Add to Favorites
+                <i class="material-icons right">add_circle</i>
+              </button>
+            </form>
+            <br>
+            <div class="content-contain">
+              <div class="contain-cover">
+                <br>
+              </div>
+              <div class="contain-description">
+                <strong>Genre:</strong>
+                {% for genre in game.genres %}
+                {{genre.name}}
+                {% endfor %}
+                <p><span><strong>Release Date:</strong></span> {{game.released}}</p>
+                <br>
+              </div>
+            </div>
+          </div>
+          {% if game.clip != null %}
+            <div class="card-video">
+              <iframe class="video_frame" src="{{game.clip.clips.full}}" width="560" height="315"></iframe>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  <!-- Gamespot -->
+  <div class="container">
+    <div class=" card item-contain blue-card">
+      <h2 id="favorites">Gamespot Search Results for {{game_title}}</h2>
+      {% for item in gamespot_search %}
+        <div class="card gamespot-search">
           <div class="card-image">
-            <img src="{{game.background_image}}">
-            <span class="card-title">{{game.name}}</span>
+            <img src="{{item.image}}">
           </div>
           <div class="card-content">
-
-            <!-- Favorites form -->
-            <form action="{% url 'favorites' %}" method="POST">
-              {% csrf_token %}
-                <input id="image" value="{{game.background_image}}" name="image" type="hidden">
-                <input id="title" value="{{game.name}}" name="title" type="hidden" required>
-                <button class="btn" type="submit" name="action">Add to Favorites
-                  <i class="material-icons right">add_circle</i>
-                </button>
-              </form>
-              <br>
-              <div class="content-contain">
-                <div class="contain-cover">
-                  <br>
-                </div>
-                <div class="contain-description">
-                  <strong>Genre:</strong>
-                  {% for genre in game.genres %}
-                  {{genre.name}}
-                  {% endfor %}
-                  <p><span><strong>Release Date:</strong></span> {{game.released}}</p>
-                  <br>
-                </div>
-              </div>
-            </div>
-            {% if game.clip != null %}
-              <div class="card-video">
-                <iframe class="video_frame" src="{{game.clip.clips.full}}" width="560" height="315"></iframe>
-              </div>
-            {% endif %}
+            <h5>{{item.title}}</h5>
+            <p>Released: {{item.released}}</p>
+            <p>{{item.description}}</p>
+            <a href="{{item.url}}" target="_blank"><h6>More...</h6></a>
           </div>
         </div>
+        {% endfor %}
       </div>
-    {% endfor %}
-
-    <!-- Gamespot -->
-    <div class="container">
-      <div class=" card item-contain blue-card">
-        <h2 id="favorites">Gamespot Search Results for {{game_title}}</h2>
-        {% for item in gamespot_search %}
-          <div class="card gamespot-search">
-            <div class="card-image">
-              <img src="{{item.image}}">
-            </div>
+    </div>
+  <!-- Steam search -->
+  <div class="container">
+    <div class=" card item-contain blue-card">
+      <h2 id="favorites" >Steam's top results for {{game_title}}</h2>
+        {% for item in steam_search %}
+        <div class="card amazon">
+          <div class="card-image">
+            <img src="{{item.image}}">
+          </div>
+          <div class="card-stacked">
             <div class="card-content">
               <h5>{{item.title}}</h5>
-              <p>Released: {{item.released}}</p>
-              <p>{{item.description}}</p>
-              <a href="{{item.url}}" target="_blank"><h6>More...</h6></a>
+              <h6>Released: {{item.released}}</h6>
+              <h6>{{item.price}}</h6>
+              <a class="card-action" href="{{item.url}}" target="_blank" ><h6>More...</h6></a>
             </div>
           </div>
-          {% endfor %}
         </div>
+        {% endfor %}
       </div>
-
-    <!-- Steam search -->
+    </div>
+  <!-- Amazon search -->
+  {% if amazon_search == None %}
+  {% else %}
     <div class="container">
       <div class=" card item-contain blue-card">
-        <h2 id="favorites" >Steam's top results for {{game_title}}</h2>
-          {% for item in steam_search %}
-          <div class="card amazon">
+        <h2 id="favorites" >Amazon's top search results for {{game_title}}</h2>
+          {% for item in amazon_search %}
+          <div class="card horizontal amazon">
             <div class="card-image">
               <img src="{{item.image}}">
             </div>
             <div class="card-stacked">
               <div class="card-content">
                 <h5>{{item.title}}</h5>
-                <h6>Released: {{item.released}}</h6>
                 <h6>{{item.price}}</h6>
                 <a class="card-action" href="{{item.url}}" target="_blank" ><h6>More...</h6></a>
               </div>
@@ -183,32 +195,6 @@
           {% endfor %}
         </div>
       </div>
-
-
-    <!-- Amazon search -->
-    {% if amazon_search == None %}
-
-    {% else %}
-      <div class="container">
-        <div class=" card item-contain blue-card">
-          <h2 id="favorites" >Amazon's top search results for {{game_title}}</h2>
-            {% for item in amazon_search %}
-            <div class="card horizontal amazon">
-              <div class="card-image">
-                <img src="{{item.image}}">
-              </div>
-              <div class="card-stacked">
-                <div class="card-content">
-                  <h5>{{item.title}}</h5>
-                  <h6>{{item.price}}</h6>
-                  <a class="card-action" href="{{item.url}}" target="_blank" ><h6>More...</h6></a>
-                </div>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-    {% endif%}
-
+  {% endif%}
   {% endif %}
 {%endblock %}
