@@ -14,7 +14,7 @@ Scraping the web for video game data.
 * Sometimes requests don't got through the first time.
 
 
-# Roadmap
+# Features I'd Like to Add
 * Save scrape results to the database
 * User login and ability to comment on other users favorites.
 * Only the user who created the favorite can edit it.
