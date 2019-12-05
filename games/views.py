@@ -168,22 +168,26 @@ def home(request):
         amazon_featured = []
 
         amazon_results = amazon_soup.select("div.s-result-list.s-search-results.sg-row")
-        results = amazon_results[0].select("div.a-section.a-spacing-medium")
-        for result in results:
-            title = result.h2.text
-            image = result.img.get('src')
-            url = "https://www.amazon.com/" + result.a.get('href')
-            price_span = result.select("span.a-offscreen")
-            if price_span == []:
-                price = "Price NA"
-            else:
-                price = price_span[0].text
-                amazon_featured.append({
-                'title' : title,
-                'image' : image,
-                'url' : url,
-                'price' : price
-                })
+
+        try:
+            results = amazon_results[0].select("div.a-section.a-spacing-medium")
+            for result in results:
+                title = result.h2.text
+                image = result.img.get('src')
+                url = "https://www.amazon.com/" + result.a.get('href')
+                price_span = result.select("span.a-offscreen")
+                if price_span == []:
+                    price = "Price NA"
+                else:
+                    price = price_span[0].text
+                    amazon_featured.append({
+                    'title' : title,
+                    'image' : image,
+                    'url' : url,
+                    'price' : price
+                    })
+        except Exception as error:
+            amazon_featured = None
 
         #Steam News Scrape
         steam_news_page = requests.get("https://store.steampowered.com/news/",headers={"User-Agent":"Defined"})
