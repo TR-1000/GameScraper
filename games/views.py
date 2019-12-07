@@ -146,7 +146,7 @@ def home(request):
 
         ign_soup = BeautifulSoup(ign_page.content, "html.parser")
 
-        ign_results = ign_soup.select("article.jsx-1665423064.card")
+        ign_results = ign_soup.select("article.jsx-4177878793.card")
 
         ign_news = []
 
