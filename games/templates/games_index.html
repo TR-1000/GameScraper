@@ -3,31 +3,33 @@
 
 
 <!----------------------------- Home View ------------------------------------->
-  {% if search == False %}
-
-<!-- Amazon -->
-<div class="container">
-  <div class=" card item-contain blue-card">
-    <h2 id="favorites" >Amazon's top results for Video Games</h2>
-      {% for item in amazon_featured %}
-      <div class="card horizontal amazon">
-        <div class="card-image">
-          <img src="{{item.image}}">
-        </div>
-        <div class="card-stacked">
-          <div class="card-content">
-            <h5>{{item.title}}</h5>
-            <h6>{{item.price}}</h6>
-            <a class="card-action" href="{{item.url}}" target="_blank" ><h6>More...</h6></a>
+{% if search == False %}
+  <!-- Amazon -->
+  {% if amazon_featured != None %}
+    <div class="container">
+      <div class=" card item-contain blue-card">
+        <h2 id="favorites" >Amazon's top results for Video Games</h2>
+        {% for item in amazon_featured %}
+        <div class="card horizontal amazon">
+          <div class="card-image">
+            <img src="{{item.image}}">
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+              <h5>{{item.title}}</h5>
+              <h6>{{item.price}}</h6>
+              <a class="card-action" href="{{item.url}}" target="_blank" ><h6>More...</h6></a>
+            </div>
           </div>
         </div>
+        {% endfor %}
       </div>
-      {% endfor %}
     </div>
-  </div
+  {% endif %}
+
 <!-- ign_news -->
-<div class="container">
-  <div class=" card item-contain blue-card">
+  <div class="container">
+    <div class=" card item-contain blue-card">
     <h2 id="favorites" >IGN Featured News</h2>
       {% for item in ign_news %}
       <div class="card horizontal amazon">
@@ -42,11 +44,12 @@
         </div>
       </div>
       {% endfor %}
+    </div>
   </div>
-</div
-<!-- Gamespot -->
-<div class="container">
-  <div class=" card item-contain blue-card">
+
+  <!-- Gamespot -->
+  <div class="container">
+    <div class=" card item-contain blue-card">
     <h2 id="favorites">Latest News from Gamespot</h2>
     {% for item in gamespot_news %}
       <div class="card gamespot">
@@ -60,10 +63,11 @@
       </div>
       {% endfor %}
     </div>
-  </div
+  </div>
+
 <!-- Steam -->
-<div class="container">
-  <div class=" card item-contain blue-card">
+  <div class="container">
+    <div class=" card item-contain blue-card">
     <h2 id="favorites">Latest News from Steam</h2>
     {% for item in steam_news %}
       <div class="card steam">
@@ -133,6 +137,7 @@
       </div>
     </div>
   {% endfor %}
+
   <!-- Gamespot -->
   <div class="container">
     <div class=" card item-contain blue-card">
@@ -152,6 +157,7 @@
         {% endfor %}
       </div>
     </div>
+
   <!-- Steam search -->
   <div class="container">
     <div class=" card item-contain blue-card">
@@ -173,17 +179,21 @@
         {% endfor %}
       </div>
     </div>
+
   <!-- Amazon search -->
-  {% if amazon_search == None %}
-  {% else %}
+  <script type="text/javascript">
+    console.log("{{amazon_search}}")
+  </script>
+
+  {% if amazon_search != None %}
     <div class="container">
       <div class=" card item-contain blue-card">
         <h2 id="favorites" >Amazon's top search results for {{game_title}}</h2>
           {% for item in amazon_search %}
-          <div class="card horizontal amazon">
-            <div class="card-image">
-              <img src="{{item.image}}">
-            </div>
+        <div class="card horizontal amazon">
+          <div class="card-image">
+            <img src="{{item.image}}">
+          </div>
             <div class="card-stacked">
               <div class="card-content">
                 <h5>{{item.title}}</h5>
@@ -191,10 +201,10 @@
                 <a class="card-action" href="{{item.url}}" target="_blank" ><h6>More...</h6></a>
               </div>
             </div>
-          </div>
-          {% endfor %}
         </div>
+          {% endfor %}
       </div>
-  {% endif%}
+    </div>
+  {% endif %}
   {% endif %}
 {%endblock %}

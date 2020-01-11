@@ -95,7 +95,8 @@ def home(request):
 
 
         #Amazon scrape search request
-        amazon_page = requests.get("https://www.amazon.com/s?k=" + game_title + "&ref=nb_sb_noss_2",headers={"User-Agent":"Defined"})
+        url = "https://www.amazon.com/s?k=" + game_title + "&rh=n%3A468642&dc&crid=14418P5C84YGO&qid=1578701596&rnid=2941120011&sprefix=%2Caps%2C164&ref=sr_nr_n_1"
+        amazon_page = requests.get(url,headers={"User-Agent":"Defined"})
         amazon_soup = BeautifulSoup(amazon_page.content, "html.parser")
         amazon_results = amazon_soup.select("div.s-result-list.s-search-results.sg-row")
         try:
@@ -121,6 +122,10 @@ def home(request):
 
         except Exception as error:
             amazon_search = None
+        print(amazon_search)
+        print(url)
+
+
 
         #rawg api data request
         rawg_api_response = requests.get(f'https://api.rawg.io/api/games?page_size=1&search={game_title}')
@@ -161,7 +166,7 @@ def home(request):
             })
 
         #Amazon Scrape
-        amazon_page = requests.get("https://www.amazon.com/s?k=video+games&rh=n%3A468642&dc&qid=1568839232&rnid=2941120011&ref=sr_nr_n_1",headers={"User-Agent":"Defined"})
+        amazon_page = requests.get("https://www.amazon.com/s?k=video+games&rh=n%3A468642&dc&qid=1578698986&rnid=2941120011&ref=sr_nr_n_1",headers={"User-Agent":"Defined"})
 
         amazon_soup = BeautifulSoup(amazon_page.content, "html.parser")
 
@@ -188,6 +193,7 @@ def home(request):
                     })
         except Exception as error:
             amazon_featured = None
+        print(amazon_featured)
 
         #Steam News Scrape
         steam_news_page = requests.get("https://store.steampowered.com/news/",headers={"User-Agent":"Defined"})
