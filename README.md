@@ -11,7 +11,7 @@ Scraping the web for video game data.
 
 
 # Issues
-* Sometimes requests don't got through the first time.
+* Sometimes Amazon search requests don't got through the first time.
 
 
 # Features I'd Like to Add
