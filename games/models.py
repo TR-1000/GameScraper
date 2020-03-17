@@ -1,4 +1,5 @@
 from django.db import models
+from scrapy_djangoitem import DjangoItem
 
 # Create your models here.
 
