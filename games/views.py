@@ -130,28 +130,27 @@ def home(request):
         import requests
         from bs4 import BeautifulSoup
 
-        try:
 
-            #ign featured news scrape
-            ign_page = requests.get("https://www.ign.com/",headers={"User-Agent":"Defined"})
-            ign_soup = BeautifulSoup(ign_page.content, "html.parser")
-            ign_results = ign_soup.select("article.jsx-4177878793.card")
-            ign_news = []
-            for result in ign_results:
-                title = result.h3.text
-                url = "https://www.ign.com" + result.a.get('href')
-                image = result.img.get('src')
-                ign_news.append({
-                    'title' : title,
-                    'url' : url,
-                    'image' : image
-                    })
+        # Verge gaming news
+        try:
+            verge_gaming_page = requests.get("https://www.theverge.com/games",headers={"User-Agent":"Defined"})
+            verge_gaming_soup = BeautifulSoup(verge_gaming_page.content,"html.parser")
+            verge_gaming_articles = verge_gaming_soup.select("div.c-entry-box--compact.c-entry-box--compact--article")
+            verge_articles = []
+            for article in verge_gaming_articles[:6]:
+                verge_articles.append({
+                    'url': article.a.get("href"),
+                    'image': article.find_all("img")[1].get("src"),
+                    'title': article.h2.text,
+                    'date': article.time.text.strip()
+                })
+
         except Exception as error:
             ign_news = None
 
 
 
-        #Amazon Scrape
+        #Amazon Featured
         try:
             amazon_page = requests.get("https://www.amazon.com/s?k=video+games&rh=n%3A468642&dc&qid=1578698986&rnid=2941120011&ref=sr_nr_n_1",headers={"User-Agent":"Defined"})
             amazon_soup = BeautifulSoup(amazon_page.content, "html.parser")
@@ -184,28 +183,33 @@ def home(request):
 
         #Steam News Scrape
         try:
-            steam_news_page = requests.get("https://store.steampowered.com/news/",headers={"User-Agent":"Defined"})
+            steam_news_page = requests.get("https://store.steampowered.com/",headers={"User-Agent":"Defined"})
             soup = BeautifulSoup(steam_news_page.text, "html.parser")
+            steam_results = soup.find("div", {"id": "tab_specials_content"}).select("a")
             steam_news = []
-            steam_results = soup.select("div.newsPostBlock.steam_release")
-            print(steam_results)
-            for result in steam_results:
-                if result.a != None:
-                    url = result.a.get('href')
-                    title = result.text.strip()
-                    image = result.img.get('src')
-                    steam_news.append({
-                        'url' : url,
-                        'title' : title,
-                        'image' : image,
-                        })
+            for result in steam_results[:6]:
+                if "," in result.get("data-ds-appid"):
+                    app_split = result.get("data-ds-appid").split(",")
+                    app_id = app_split[0]
+                else:
+                    app_id = result.get("data-ds-appid")
+
+                steam_news.append({
+                    'url': result.get("href"),
+                    'image': f"https://steamcdn-a.akamaihd.net/steam/apps/{app_id}/header.jpg",
+                    'title': result.find("div", {"class": "tab_item_name"}).text,
+                    'original_prince': result.find("div", {"class": "discount_original_price"}).text,
+                    'price': result.find("div", {"class": "discount_final_price"}).text,
+                    'app_id': app_id
+                })
+
         except Exception as error:
             steam_news = None
 
 
 
 
-        #Gamespot news
+        #PC Gamer news
         try:
             pcgamer_news_page = requests.get("https://www.pcgamer.com/",headers={"User-Agent":"Defined"})
             pcgamer_news_soup = BeautifulSoup(pcgamer_news_page.content, "html.parser")
@@ -222,7 +226,7 @@ def home(request):
             pcgamer_news = None
 
         return render(request, 'games_index.html',
-        {'search' : False, 'pcgamer_news': pcgamer_news, 'steam_news': steam_news, 'amazon_featured': amazon_featured, 'ign_news' : ign_news})
+        {'search' : False, 'pcgamer_news': pcgamer_news, 'steam_news': steam_news, 'amazon_featured': amazon_featured, 'verge_articles' : verge_articles})
 
 
 
