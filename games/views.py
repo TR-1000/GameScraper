@@ -211,7 +211,7 @@ def home(request):
             pcgamer_news_soup = BeautifulSoup(pcgamer_news_page.content, "html.parser")
             pcgamer_featured = pcgamer_news_soup.find_all("div", {"class": "feature-block-item-wrapper"})
             pcgamer_news = []
-            for article in pcgamer_featured:
+            for article in pcgamer_featured[1:]:
                 pcgamer_news.append({
                     'url': article.a.get('href'),
                     'title': article.a.get('aria-label'),
