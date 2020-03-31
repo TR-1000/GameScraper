@@ -4,31 +4,22 @@ from . models import Game
 from . forms import GameForm
 from django.contrib.auth.decorators import login_required
 
+
 def home(request):
     from bs4 import BeautifulSoup
     import requests
     import json
     import os
 
-    # Bing API required modules.
-    from azure.cognitiveservices.search.websearch import WebSearchAPI
-    from azure.cognitiveservices.search.websearch.models import SafeSearch
-    from msrest.authentication import CognitiveServicesCredentials
-
     if request.method == 'POST':
         #set variable for searched game
         game_title = request.POST['game_search']
-
         #Gamespot Search
         gamespot_search_page = requests.get("https://www.gamespot.com/search/?header=1&q=" + game_title,headers={"User-Agent":"Defined"})
-
         gamespot_search_soup = BeautifulSoup(gamespot_search_page.content, "html.parser")
-
         gamespot_search_results = gamespot_search_soup.select("li.media")
         #print(gamespot_search_results)
-
         gamespot_search = []
-
         for result in gamespot_search_results:
             try:
                 title = result.span.a.text
@@ -63,35 +54,34 @@ def home(request):
 
 
         #Steam search scrape
-        steam_search_page = requests.get("https://store.steampowered.com/search/?term=" + game_title,headers={"User-Agent":"Defined"})
-
-        steam_search_soup = BeautifulSoup(steam_search_page.content, "html.parser")
-
-        steam_search_results = steam_search_soup.select("a.search_result_row")
-
-        steam_search = []
-
-        #print(results)
-        for result in steam_search_results:
-            url = result.get('href')
-            #print(url)
-            image = result.img.get('src').replace('capsule_sm_120', 'header')
-            #print(image)
-            title = result.span.text
-            #print(title)
-            price_tag = result.select("div.search_price")
-            price = price_tag[0].text.strip()
-            #print(price)
-            released_tag = result.select("div.search_released")
-            released = released_tag[0].text
-            #print(released)
-            steam_search.append({
-            'title' : title,
-            'image' : image,
-            'url' : url,
-            'price' : price,
-            'released' : released
-            })
+        try:
+            steam_search_page = requests.get("https://store.steampowered.com/search/?term=" + game_title,headers={"User-Agent":"Defined"})
+            steam_search_soup = BeautifulSoup(steam_search_page.content, "html.parser")
+            steam_search_results = steam_search_soup.select("a.search_result_row")
+            steam_search = []
+            #print(results)
+            for result in steam_search_results:
+                url = result.get('href')
+                #print(url)
+                image = result.img.get('src').replace('capsule_sm_120', 'header')
+                #print(image)
+                title = result.span.text
+                #print(title)
+                price_tag = result.select("div.search_price")
+                price = price_tag[0].text.strip()
+                #print(price)
+                released_tag = result.select("div.search_released")
+                released = released_tag[0].text
+                #print(released)
+                steam_search.append({
+                'title' : title,
+                'image' : image,
+                'url' : url,
+                'price' : price,
+                'released' : released
+                })
+        except Exception as error:
+            steam_search = None
 
 
         #Amazon scrape search request
@@ -124,6 +114,8 @@ def home(request):
         print(amazon_search)
 
 
+
+
         #rawg api data request
         rawg_api_response = requests.get(f'https://api.rawg.io/api/games?page_size=1&search={game_title}')
         try:
@@ -131,47 +123,41 @@ def home(request):
         except Exception as error:
             rawg_api = "Error loading api data..."
 
-
-
-        ##########################################
-        ##########################################
-        ##########################################
         return render(request, 'games_index.html', {'search': True, 'game_title' : game_title, 'rawg_api': rawg_api, 'amazon_search': amazon_search, 'steam_search': steam_search, 'gamespot_search': gamespot_search})
 
     else:
-
+        ## LANDING PAGE ##
         import requests
         from bs4 import BeautifulSoup
 
-        #ign featured news scrape
-        ign_page = requests.get("https://www.ign.com/",headers={"User-Agent":"Defined"})
+        try:
 
-        ign_soup = BeautifulSoup(ign_page.content, "html.parser")
+            #ign featured news scrape
+            ign_page = requests.get("https://www.ign.com/",headers={"User-Agent":"Defined"})
+            ign_soup = BeautifulSoup(ign_page.content, "html.parser")
+            ign_results = ign_soup.select("article.jsx-4177878793.card")
+            ign_news = []
+            for result in ign_results:
+                title = result.h3.text
+                url = "https://www.ign.com" + result.a.get('href')
+                image = result.img.get('src')
+                ign_news.append({
+                    'title' : title,
+                    'url' : url,
+                    'image' : image
+                    })
+        except Exception as error:
+            ign_news = None
 
-        ign_results = ign_soup.select("article.jsx-4177878793.card")
 
-        ign_news = []
-
-        for result in ign_results:
-            title = result.h3.text
-            url = "https://www.ign.com" + result.a.get('href')
-            image = result.img.get('src')
-            ign_news.append({
-                'title' : title,
-                'url' : url,
-                'image' : image
-            })
 
         #Amazon Scrape
-        amazon_page = requests.get("https://www.amazon.com/s?k=video+games&rh=n%3A468642&dc&qid=1578698986&rnid=2941120011&ref=sr_nr_n_1",headers={"User-Agent":"Defined"})
-
-        amazon_soup = BeautifulSoup(amazon_page.content, "html.parser")
-
-        amazon_featured = []
-
-        amazon_results = amazon_soup.select("div.s-result-list.s-search-results.sg-row")
-
         try:
+            amazon_page = requests.get("https://www.amazon.com/s?k=video+games&rh=n%3A468642&dc&qid=1578698986&rnid=2941120011&ref=sr_nr_n_1",headers={"User-Agent":"Defined"})
+            amazon_soup = BeautifulSoup(amazon_page.content, "html.parser")
+            amazon_featured = []
+            amazon_results = amazon_soup.select("div.s-result-list.s-search-results.sg-row")
+
             results = amazon_results[0].select("div.a-section.a-spacing-medium")
             for result in results:
                 title = result.h2.text
@@ -192,53 +178,57 @@ def home(request):
             amazon_featured = None
         print(amazon_featured)
 
+
+
+
+
         #Steam News Scrape
-        steam_news_page = requests.get("https://store.steampowered.com/news/",headers={"User-Agent":"Defined"})
+        try:
+            steam_news_page = requests.get("https://store.steampowered.com/news/",headers={"User-Agent":"Defined"})
+            soup = BeautifulSoup(steam_news_page.text, "html.parser")
+            steam_news = []
+            steam_results = soup.select("div.newsPostBlock.steam_release")
+            print(steam_results)
+            for result in steam_results:
+                if result.a != None:
+                    url = result.a.get('href')
+                    title = result.text.strip()
+                    image = result.img.get('src')
+                    steam_news.append({
+                        'url' : url,
+                        'title' : title,
+                        'image' : image,
+                        })
+        except Exception as error:
+            steam_news = None
 
-        soup = BeautifulSoup(steam_news_page.text, "html.parser")
-        steam_news = []
 
-        steam_results = soup.select("div.body")
-        for result in steam_results:
-            if result.a != None:
-                url = result.a.get('href')
-                title = result.text.strip()
-                image = result.img.get('src')
-                steam_news.append({
-                'url' : url,
-                'title' : title,
-                'image' : image,
+
+
+        #Gamespot news
+        try:
+            pcgamer_news_page = requests.get("https://www.pcgamer.com/",headers={"User-Agent":"Defined"})
+            pcgamer_news_soup = BeautifulSoup(pcgamer_news_page.content, "html.parser")
+            pcgamer_featured = pcgamer_news_soup.find_all("div", {"class": "feature-block-item-wrapper"})
+            pcgamer_news = []
+            for article in pcgamer_featured:
+                pcgamer_news.append({
+                    'url': article.a.get('href'),
+                    'title': article.a.get('aria-label'),
+                    'image': article.source.get('data-original-mos'),
                 })
 
-        #Gamespot search
-        gamespot_news_page = requests.get("https://www.gamespot.com/",headers={"User-Agent":"Defined"})
-        gamespot_news_soup = BeautifulSoup(gamespot_news_page.content, "html.parser")
-        gamespot_news_results = gamespot_news_soup.select("section.editorial.river.js-load-forever-container")
-        #print(steam_search_results)
-        gamespot_news = []
-        article_section = gamespot_news_results[0]
-        #print(article_section)
-        gamespot_articles = article_section.select("article")
-        #print(gamespot_articles)
-        for result in gamespot_articles:
-            title = result.h3.text
-            url = "https://www.gamespot.com" + result.a.get('href')
-            image = result.img.get('src')
-            description = result.p.text
-            gamespot_news.append({
-                'title':title,
-                'description':description,
-                'url':url,
-                'image':image,
-            })
+        except Exception as error:
+            pcgamer_news = None
 
-        ##########################################
-        ##########################################
-        ##########################################
         return render(request, 'games_index.html',
-        {'search' : False, 'gamespot_news': gamespot_news, 'steam_news': steam_news, 'amazon_featured': amazon_featured, 'ign_news' : ign_news})
+        {'search' : False, 'pcgamer_news': pcgamer_news, 'steam_news': steam_news, 'amazon_featured': amazon_featured, 'ign_news' : ign_news})
 
-##############################################################################################################
+
+
+################################################################################
+# FAVORITES VIEW
+################################################################################
 
 def favorites(request):
     form = GameForm(request.POST or None)
@@ -252,7 +242,9 @@ def favorites(request):
 
 
 
-##############################################################################################################
+################################################################################
+# UPDATE VIEW
+################################################################################
 
 def update(request, game_id):
     games = Game.objects.all().order_by('-id')
@@ -267,7 +259,11 @@ def update(request, game_id):
 
     return render(request, 'update.html', {'form': form, 'games': games})
 
-##############################################################################################################
+
+
+################################################################################
+# DELETE
+################################################################################
 
 def delete(request, game_id):
     game = Game.objects.get(pk=game_id)
