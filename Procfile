@@ -1,2 +1,2 @@
 web: gunicorn gameified.wsgi
-python manage.py createcachetable
+release: python manage.py createcachetable
