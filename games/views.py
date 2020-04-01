@@ -5,7 +5,7 @@ from . models import Game
 from . forms import GameForm
 from django.contrib.auth.decorators import login_required
 
-@cache_page(60*15)
+@cache_page(60*30)
 def home(request):
     from bs4 import BeautifulSoup
     import requests
@@ -26,22 +26,18 @@ def home(request):
                 title = result.span.a.text
             except:
                 title = ''
-
             try:
                 url = "https://www.gamespot.com" + result.a.get('href')
             except:
                 url = ''
-
             try:
                 image = result.img.get('src')
             except:
                 image = ''
-
             try:
                 released = result.time.span.text
             except:
                 released = ''
-
             if result.p != None:
                 description = result.p.text.strip()
 
@@ -147,7 +143,7 @@ def home(request):
                 })
 
         except Exception as error:
-            ign_news = None
+            verge_articles = None
 
 
 
@@ -217,11 +213,18 @@ def home(request):
             pcgamer_featured = pcgamer_news_soup.find_all("div", {"class": "feature-block-item-wrapper"})
             pcgamer_news = []
             for article in pcgamer_featured[1:]:
-                pcgamer_news.append({
-                    'url': article.a.get('href'),
-                    'title': article.a.get('aria-label'),
-                    'image': article.source.get('data-original-mos'),
-                })
+                try:
+                    pcgamer_news.append({
+                        'url': article.a.get('href'),
+                        'title': article.a.get('aria-label'),
+                        'image': article.source.get('data-original-mos'),
+                    })
+                except:
+                    pcgamer_news.append({
+                        'url': article.a.get('href'),
+                        'title': article.a.get('aria-label'),
+                        'image': '',
+                    })
 
         except Exception as error:
             pcgamer_news = None
