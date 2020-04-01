@@ -223,7 +223,7 @@ def home(request):
                     pcgamer_news.append({
                         'url': article.a.get('href'),
                         'title': article.a.get('aria-label'),
-                        'image': '',
+                        'image': article.img.get("src"),
                     })
 
         except Exception as error:
