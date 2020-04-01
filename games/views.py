@@ -1,10 +1,11 @@
+from django.views.decorators.cache import cache_page
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from . models import Game
 from . forms import GameForm
 from django.contrib.auth.decorators import login_required
 
-
+@cache_page(60*15)
 def home(request):
     from bs4 import BeautifulSoup
     import requests
