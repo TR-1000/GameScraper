@@ -44,14 +44,20 @@ def home(request):
                 released = result.time.span.text
             except:
                 released = ''
-            if result.p != None:
-                description = result.p.text.strip()
+            try:
+
+                if result.p != None:
+                    description = result.p.text.strip()
+                    print(description)
+            except:
+                description = ''
 
             gamespot_search.append({
                 'title' : title,
                 'url' : url,
                 'image' : image,
-                'released' : released
+                'released' : released,
+                'description': description
                 })
 
 
