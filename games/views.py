@@ -188,7 +188,7 @@ def home(request):
             soup = BeautifulSoup(steam_news_page.text, "html.parser")
             steam_results = soup.find("div", {"id": "tab_specials_content"}).select("a")
             steam_news = []
-            for result in steam_results[:6]:
+            for result in steam_results[:10]:
                 if "," in result.get("data-ds-appid"):
                     app_split = result.get("data-ds-appid").split(",")
                     app_id = app_split[0]
