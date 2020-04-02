@@ -5,7 +5,13 @@ from . models import Game
 from . forms import GameForm
 from django.contrib.auth.decorators import login_required
 
-@cache_page(60*30)
+
+
+################################################################################
+# HOME VIEW
+################################################################################
+
+@cache_page(60*30)#number of sec. til cache expires (60 secs time 30 mins)
 def home(request):
     from bs4 import BeautifulSoup
     import requests
@@ -77,7 +83,7 @@ def home(request):
                 'price' : price,
                 'released' : released
                 })
-        except Exception as error:
+        except:
             steam_search = None
 
 
@@ -106,9 +112,8 @@ def home(request):
                     'price' : price
                     })
 
-        except Exception as error:
+        except:
             amazon_search = None
-        print(amazon_search)
 
 
 
@@ -117,8 +122,8 @@ def home(request):
         rawg_api_response = requests.get(f'https://api.rawg.io/api/games?page_size=1&search={game_title}')
         try:
             rawg_api = json.loads(rawg_api_response.content)
-        except Exception as error:
-            rawg_api = "Error loading api data..."
+        except:
+            rawg_api = None
 
         return render(request, 'games_index.html', {'search': True, 'game_title' : game_title, 'rawg_api': rawg_api, 'amazon_search': amazon_search, 'steam_search': steam_search, 'gamespot_search': gamespot_search})
 
@@ -142,7 +147,7 @@ def home(request):
                     'date': article.time.text.strip()
                 })
 
-        except Exception as error:
+        except:
             verge_articles = None
 
 
@@ -170,9 +175,8 @@ def home(request):
                     'url' : url,
                     'price' : price
                     })
-        except Exception as error:
+        except:
             amazon_featured = None
-        print(amazon_featured)
 
 
 
@@ -200,7 +204,7 @@ def home(request):
                     'app_id': app_id
                 })
 
-        except Exception as error:
+        except:
             steam_news = None
 
 
@@ -226,7 +230,7 @@ def home(request):
                         'image': article.img.get("src"),
                     })
 
-        except Exception as error:
+        except:
             pcgamer_news = None
 
         return render(request, 'games_index.html',
