@@ -63,7 +63,7 @@ def home(request):
             steam_search_results = steam_search_soup.select("a.search_result_row")
             steam_search = []
             #print(results)
-            for result in steam_search_results:
+            for result in steam_search_results[:8]:
                 url = result.get('href')
                 #print(url)
                 image = result.img.get('src').replace('capsule_sm_120', 'header')
