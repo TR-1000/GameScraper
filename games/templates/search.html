@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Rawg API -->
+
+  {% for game in rawg_api.results %}
+  <div class="container">
+    <div class="card blue-card main-search">
+      <div class="card">
+        <div class="card-image">
+          <img src="{{game.background_image}}">
+          <span class="card-title">{{game.name}}</span>
+        </div>
+        <div class="card-content">
+          <!-- Favorites form -->
+          <form action="{% url 'favorites' %}" method="POST">
+            {% csrf_token %}
+              <input id="image" value="{{game.background_image}}" name="image" type="hidden">
+              <input id="title" value="{{game.name}}" name="title" type="hidden" required>
+              <button class="btn" type="submit" name="action">Add to Favorites
+                <i class="material-icons right">add_circle</i>
+              </button>
+            </form>
+            <br>
+            <div class="content-contain">
+              <div class="contain-cover">
+                <br>
+              </div>
+              <div class="contain-description">
+                <strong>Genre:</strong>
+                {% for genre in game.genres %}
+                {{genre.name}}
+                {% endfor %}
+                <p><span><strong>Release Date:</strong></span> {{game.released}}</p>
+                <p>{{gamespot_search.0.description}}</p>
+                <br>
+              </div>
+            </div>
+          </div>
+          {% if game.clip != null %}
+            <div class="card-video">
+              <iframe class="video_frame" src="{{game.clip.clips.full}}" width="560" height="315"></iframe>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+  <!-- Gamespot -->
+  <div class="container">
+    <div class=" card item-contain blue-card">
+      <h2 id="favorites">Gamespot Search Results for {{game_title}}</h2>
+      {% for item in gamespot_search %}
+        <div class="card gamespot-search">
+          <div class="card-image">
+            <img src="{{item.image}}">
+          </div>
+          <div class="card-content">
+            <h5>{{item.title}}</h5>
+            <p>Released: {{item.released}}</p>
+            <p>{{item.description}}</p>
+            <a href="{{item.url}}" target="_blank"><h6>More...</h6></a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  <!-- Steam search -->
+  <div class="container">
+    <div class=" card item-contain blue-card">
+      <h2 id="favorites" >Steam's top results for {{game_title}}</h2>
+        {% for item in steam_search %}
+        <div class="card amazon">
+          <div class="card-image">
+            <img src="{{item.image}}">
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+              <h5>{{item.title}}</h5>
+              <h6>Released: {{item.released}}</h6>
+              <h6>{{item.price}}</h6>
+              <a class="card-action" href="{{item.url}}" target="_blank" ><h6>More...</h6></a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  <!-- Amazon search -->
+  <script type="text/javascript">
+    console.log("{{amazon_search}}")
+  </script>
+
+  {% if amazon_search != None %}
+    <div class="container">
+      <div class=" card item-contain blue-card">
+        <h2 id="favorites" >Amazon's top search results for {{game_title}}</h2>
+          {% for item in amazon_search %}
+        <div class="card horizontal amazon">
+          <div class="card-image">
+            <img src="{{item.image}}">
+          </div>
+            <div class="card-stacked">
+              <div class="card-content">
+                <h5>{{item.title}}</h5>
+                <h6>{{item.price}}</h6>
+                <a class="card-action" href="{{item.url}}" target="_blank" ><h6>More...</h6></a>
+              </div>
+            </div>
+        </div>
+          {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% endblock %}

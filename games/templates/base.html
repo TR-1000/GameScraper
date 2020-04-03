@@ -18,7 +18,7 @@
       <a href="{% url 'home' %}" class="brand-logo center">Game<span class="span-blue">Scraper</span></a>
       <ul id="nav-mobile" class="left">
         <li>
-          <form action="{% url 'home' %}" method="POST">
+          <form action="{% url 'search' %}" method="POST">
           {% csrf_token %}
           <div class="input-field">
             <input id="search" placeholder="game search" name="game_search" type="search" required>
