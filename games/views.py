@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 # HOME VIEW
 ################################################################################
 
-@cache_page(60*30) # number of sec. til cache expires (60 secs time 30 mins)
+#@cache_page(60*30) # number of sec. til cache expires (60 secs time 30 mins)
 def home(request):
     from bs4 import BeautifulSoup
     import requests

@@ -27,6 +27,26 @@
     </div>
   {% endif %}
 
+
+  <!-- PCgamer -->
+    <div class="container">
+      <div class=" card item-contain blue-card">
+      <h2 id="favorites">Latest News from PC Gamer</h2>
+      {% for item in pcgamer_news %}
+        <div class="card steam">
+          <div class="card-image">
+            <img src="{{item.image}}">
+          </div>
+          <div class="card-content">
+            <h5>{{item.title}}</h5>
+            <a href="{{item.url}}" target="_blank"><h6>More...</h6></a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+      
+
 <!-- Steam -->
   <div class="container">
     <div class=" card item-contain blue-card">
@@ -48,23 +68,6 @@
     </div>
   </div>
 
-<!-- PCgamer -->
-  <div class="container">
-    <div class=" card item-contain blue-card">
-    <h2 id="favorites">Latest News from PC Gamer</h2>
-    {% for item in pcgamer_news %}
-      <div class="card steam">
-        <div class="card-image">
-          <img src="{{item.image}}">
-        </div>
-        <div class="card-content">
-          <h5>{{item.title}}</h5>
-          <a href="{{item.url}}" target="_blank"><h6>More...</h6></a>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
 
   <!-- Techspot -->
     <div class="container">
@@ -84,6 +87,7 @@
         {% endfor %}
       </div>
     </div>
+
 
 <!-- verge_gaming_news -->
   <div class="container">
