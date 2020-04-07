@@ -11,17 +11,14 @@ from django.contrib.auth.decorators import login_required
 # HOME VIEW
 ################################################################################
 
-#@cache_page(60*30) # number of sec. til cache expires (60 secs time 30 mins)
+@cache_page(60*360) # number of sec. til cache expires (60 secs time 360 mins is every 6 hrs)
 def home(request):
     from bs4 import BeautifulSoup
     import requests
     import json
     import os
 
-
-
     ## LANDING PAGE ##
-
     # Verge gaming news
     try:
         verge_gaming_page = requests.get("https://www.theverge.com/games",headers={"User-Agent":"Defined"})
@@ -37,6 +34,9 @@ def home(request):
             })
     except:
         verge_articles = None
+
+
+
     #Amazon Featured
     try:
         amazon_page = requests.get("https://www.amazon.com/s?k=video+games&rh=n%3A468642&dc&qid=1578698986&rnid=2941120011&ref=sr_nr_n_1",headers={"User-Agent":"Defined"})
@@ -61,6 +61,9 @@ def home(request):
                 })
     except:
         amazon_featured = None
+
+
+
     #Steam News Scrape
     try:
         steam_news_page = requests.get("https://store.steampowered.com/",headers={"User-Agent":"Defined"})
@@ -83,6 +86,8 @@ def home(request):
             })
     except:
         steam_news = None
+
+
     #Techspot News
     try:
         techspot_request = requests.get("https://www.techspot.com/category/gaming/",headers={"User-Agent":"Defined"})
@@ -98,6 +103,8 @@ def home(request):
                 })
     except:
         techspot_articles = None
+
+
     #PC Gamer News
     try:
         pcgamer_news_page = requests.get("https://www.pcgamer.com/",headers={"User-Agent":"Defined"})
@@ -149,7 +156,6 @@ def favorites(request):
 # SEARCH
 ################################################################################
 
-@cache_page(60*30)
 def search(request):
     from bs4 import BeautifulSoup
     import requests
@@ -268,7 +274,6 @@ def search(request):
 
         except:
             amazon_search = None
-
 
 
 
