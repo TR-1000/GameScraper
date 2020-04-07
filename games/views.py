@@ -199,21 +199,13 @@ def search(request):
             except:
                 description = ''
 
-            try:
-                gamespot_search.append({
-                    'title' : title,
-                    'url' : url,
-                    'image' : image,
-                    'released' : released,
-                    'description': description
-                    })
-            except:
-                gamespot_search.append({
-                    'title' : title,
-                    'url' : url,
-                    'image' : image,
-                    'released' : released,
-                    })
+            gamespot_search.append({
+                'title' : title,
+                'url' : url,
+                'image' : image,
+                'released' : released,
+                'description': description
+            })
 
 
         #Steam search scrape
