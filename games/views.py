@@ -290,7 +290,7 @@ def search(request):
                                                     })
 
     else:
-        return(request, 'search.html')
+        return redirect('home') # Redirect to home() view
 
 
 
