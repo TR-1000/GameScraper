@@ -16,7 +16,8 @@ The images that are used on the steam home page are small. A lot smaller than wh
     ...
 </a>
 ```
-In this example, the app id is "275850", which is the game No Man's Sky
+In this example, the app id is "275850", which is the game No Man's Sky.
+
 Once I found a way to extract app id's from the `<a>` tags it was only a matter of figuring out the proper way to construct the image URL. The header images for games on Steam all follow the same pattern. This is the header image URL for No Man's Sky: 
 `https://steamcdn-a.akamaihd.net/steam/apps/275850/header.jpg?`
 
