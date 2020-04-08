@@ -9,7 +9,7 @@ At this time GameScraper collects data from PC Gamer, Steam, The Verge, and Tech
 # Challenges
 
 ### Getting images from the Steam Specials tab
-The images that are used on the steam home page are small. A lot smaller than what I wanted to display on my app. Resizing the images to make them bigger just made them blurry. So instead of extracting the images with Beautiful Soup, I extracted the games' Steam app id from the data-ds-appid attribute in the `<a> tag:`
+The images that are used on the steam home page are small. A lot smaller than what I wanted to display on my app. Resizing the images to make them bigger just made them blurry. So instead of extracting the images with Beautiful Soup, I extracted the games' Steam app id from the data-ds-appid attribute in the `<a>` tag:
     
 ```html
 <a href="https://store.steampowered.com/app/275850/No_Mans_Sky/?snr=1_4_4__tab-Specials_1" class="tab_item app_impression_tracked focus" data-ds-appid="275850" data-ds-itemkey="App_275850" data-ds-tagids="[1100689,1695,1755,3834,3942,1662,3839]" data-ds-crtrids="[34051164]">
@@ -17,7 +17,7 @@ The images that are used on the steam home page are small. A lot smaller than wh
 </a>
 ```
 In this example, the app id is "275850", which is the game No Man's Sky
-Once I found a way to extract app id's from the <a> tags it was only a matter of figuring out the proper way to construct the image URL. The header images for games on Steam all follow the same pattern. This is the header image URL for No Man's Sky: 
+Once I found a way to extract app id's from the `<a>` tags it was only a matter of figuring out the proper way to construct the image URL. The header images for games on Steam all follow the same pattern. This is the header image URL for No Man's Sky: 
 `https://steamcdn-a.akamaihd.net/steam/apps/275850/header.jpg?`
 
 So after extraction the app id of each game all I needed to do was format the URL string to include the game app id:
