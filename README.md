@@ -24,7 +24,10 @@ app_id = result.get("data-ds-appid")
 image = f"https://steamcdn-a.akamaihd.net/steam/apps/{app_id}/header.jpg?"
 ```
 
-That worked fine for maost games, but I ran into a problem. Some games had more than one app id in the data-ds-appid attribute. For instance The Witcher 3: Wild Hunt Game of the Year Edition had three app ids because it's comprised of three seperate apps, the base game and two DLC expansions, each with it's own id.
+That worked fine for maost games, but I ran into a problem. Some games had more than one app id in the data-ds-appid attribute. For instance The Witcher 3: Wild Hunt Game of the Year Edition had three app ids because it's comprised of three seperate apps, the base game and two DLC expansions, each with it's own id:
+
+![](https://github.com/TR-1000/GameScraper/blob/master/staticfiles/img/CaptureInspectWitcher.PNG?raw=true)
+
 
 ```html
 <a href="https://store.steampowered.com/sub/124923/?snr=1_7_7_151_150_1" data-ds-packageid="124923" data-ds-appid="292030,378649,378648" data-ds-itemkey="Sub_124923" data-ds-tagids="[122,1695,1742,4166,5611,1684,21]" data-ds-descids="[1,5]" data-ds-crtrids="[32989758]" onmouseover="GameHover( this, event, 'global_hover', {&quot;type&quot;:&quot;sub&quot;,&quot;id&quot;:124923,&quot;public&quot;:1,&quot;v6&quot;:1} );" onmouseout="HideGameHover( this, event, 'global_hover' )" class="search_result_row ds_collapse_flag  app_impression_tracked" data-search-page="1">
