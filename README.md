@@ -26,7 +26,7 @@ image = f"https://steamcdn-a.akamaihd.net/steam/apps/{app_id}/header.jpg?"
 
 That worked fine for maost games, but I ran into a problem. Some games had more than one app id in the data-ds-appid attribute. For instance The Witcher 3: Wild Hunt Game of the Year Edition had three app ids because it's comprised of three seperate apps, the base game and two DLC expansions, each with it's own id:
 
-![](https://github.com/TR-1000/GameScraper/blob/master/staticfiles/img/CaptureInspectWitcher.PNG?raw=true)
+![](https://github.com/TR-1000/GameScraper/blob/master/staticfiles/img/CaptureInspectWitcher.png?raw=true)
 
 
 ```html
