@@ -16,17 +16,19 @@ At this time GameScraper collects data from PC Gamer, Steam, The Verge, and Tech
 # Challenges
 
 ### Getting images from the Steam specials tab
-The images that are used on the steam home page are small. A lot smaller than what I wanted to display in my app. Resizing the images to make them bigger just made them blurry. So instead of extracting the images with Beautiful Soup, I extracted the games' Steam app id from the data-ds-appid attribute in the `<a>` tag and inserted them into a header url:
+The images that are used on the steam home page are small. A lot smaller than what I wanted to display in my app. Resizing the images to make them bigger just made them blurry. So instead of extracting the image URL with Beautiful Soup, I extracted the games' Steam app id from the data-ds-appid attribute in the `<a>` tag and inserted them into a header url:
 
 In this example, the app id is "275850", which is the game No Man's Sky.
 
 ![](https://github.com/TR-1000/GameScraper/blob/master/staticfiles/img/CaptureInspect.PNG?raw=true)
 
-Once I found a way to extract app id's from the `<a>` tags it was only a matter of figuring out the proper way to construct the image URL. The header images for games on Steam all follow the same pattern:
+Once I found a way to get app id's from the `<a>` tags it was only a matter of figuring out the proper way to construct the image URL. The header images for games on Steam all follow the same pattern:
 
-`https://steamcdn-a.akamaihd.net/steam/apps/THE GAME'S APP ID GOES HERE/header.jpg?`
+```html
+https://steamcdn-a.akamaihd.net/steam/apps/THE GAME'S APP ID GOES HERE/header.jpg?
+```
 
-So after extracting the app id of each game all I needed to do was format the URL string to include it:
+So all I needed to do was format the URL string to include the app id:
 ```python
 app_id = result.get("data-ds-appid")
 image = f"https://steamcdn-a.akamaihd.net/steam/apps/{app_id}/header.jpg?"
@@ -45,7 +47,7 @@ if "," in result.get("data-ds-appid"):
 else:
 app_id = result.get("data-ds-appid")
 ```
-It's not a perfect solution since I'd still like to get the image the Game of the Year edition, but this is a good workaround for now since the extracted title identifies the game as the Game of the Year edition. 
+It's not a perfect solution since I'd still like to get the image the Game of the Year edition, but this is a good workaround for now since the extracted title identifies the game as the Game of the Year edition.
 
 And here's how the complete code for the steam deals scrape as it appears in the views.py file of the app:
 <br/>
