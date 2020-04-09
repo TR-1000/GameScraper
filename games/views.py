@@ -168,9 +168,11 @@ def search(request):
     from bs4 import BeautifulSoup
     import requests
     import json
+    from django.core.cache import cache
 
-
+    cache.clear()
     if request.method == 'POST':
+        cache.clear()
 
         #set variable for searched game
         game_title = request.POST['game_search']
