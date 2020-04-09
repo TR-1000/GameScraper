@@ -4,22 +4,26 @@ from django.contrib import messages
 from . models import Game
 from . forms import GameForm
 from django.contrib.auth.decorators import login_required
-
-
+from django.core.cache import cache
+from bs4 import BeautifulSoup
+import requests
+import json
 
 ################################################################################
 # HOME VIEW
 ################################################################################
 
-@cache_page(60*30) # number of sec. til cache expires (60 secs time 30)
+@cache_page(60*30) # number of sec. til cache expires (60 secs time 60 mins )
 def home(request):
-    from bs4 import BeautifulSoup
-    import requests
 
-    ## LANDING PAGE ##
+    if request.method == 'POST':
+        cache.clear()
+
+
     # Verge gaming news
     try:
         verge_gaming_page = requests.get("https://www.theverge.com/games",headers={"User-Agent":"Defined"})
+        print("getting stuff")
         verge_gaming_soup = BeautifulSoup(verge_gaming_page.content,"html.parser")
         verge_gaming_articles = verge_gaming_soup.select("div.c-entry-box--compact.c-entry-box--compact--article")
         verge_articles = []
@@ -165,10 +169,7 @@ def favorites(request):
 ################################################################################
 
 def search(request):
-    from bs4 import BeautifulSoup
-    import requests
-    import json
-    from django.core.cache import cache
+
 
     cache.clear()
     if request.method == 'POST':
@@ -176,7 +177,6 @@ def search(request):
 
         #set variable for searched game
         game_title = request.POST['game_search']
-
 
         #Gamespot Search
         gamespot_search_page = requests.get("https://www.gamespot.com/search/?header=1&q=" + game_title,headers={"User-Agent":"Defined"})
