@@ -6,6 +6,11 @@ GameScraper is a web application that scrapes the web for video game news and de
 
 At this time GameScraper collects data from PC Gamer, Steam, The Verge, and Techspot to aggregate the latest news and deals. The search function collects data from Gamespot and RAWG API. It used to also utilized the Bing Web Search API but only during the 2-week trial.
 
+# Built With
+* Python
+* Django
+* BeautifulSoup
+
 # Challenges
 
 ### Getting images from the Steam Specials tab
@@ -117,13 +122,6 @@ for result in gamespot_search_results:
     
   
 ```
-
-
-
-# Built With
-* Python
-* Django
-* BeautifulSoup
 
 
 # Issues
