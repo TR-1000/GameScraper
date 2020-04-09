@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 # HOME VIEW
 ################################################################################
 
-@cache_page(60*120) # number of sec. til cache expires (60 secs time 120 mins is every 2 hrs)
+# @cache_page(60*30) # number of sec. til cache expires (60 secs time 30)
 def home(request):
     from bs4 import BeautifulSoup
     import requests
@@ -34,7 +34,6 @@ def home(request):
             })
     except:
         verge_articles = None
-
 
 
     #Amazon Featured
@@ -61,7 +60,6 @@ def home(request):
                 })
     except:
         amazon_featured = None
-
 
 
     #Steam News Scrape
@@ -120,12 +118,27 @@ def home(request):
                 })
             except:
                 pcgamer_news.append({
-                    'url': article.a.get('href'),
+                    'url': a.get('href'),
                     'title': article.a.get('aria-label'),
                     'image': article.img.get("src"),
                 })
+
+
+        pcgamer_articles = pcgamer_news_soup.select("div.listingResults.all div.listingResult")
+        for article in pcgamer_articles[:10]:
+            try:
+                pcgamer_news.append({
+                'title': article.a.get('aria-label'),
+                'url': article.a.get('href'),
+                'image': article.img.get('data-original-mos')
+                })
+            except:
+                print("skip")
+                continue
     except:
         pcgamer_news = None
+
+
     # Return and render results to template
     return render(request, 'games_index.html',{
         'search' : False,
