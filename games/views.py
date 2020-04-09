@@ -15,8 +15,6 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     from bs4 import BeautifulSoup
     import requests
-    import json
-    import os
 
     ## LANDING PAGE ##
     # Verge gaming news
@@ -25,7 +23,7 @@ def home(request):
         verge_gaming_soup = BeautifulSoup(verge_gaming_page.content,"html.parser")
         verge_gaming_articles = verge_gaming_soup.select("div.c-entry-box--compact.c-entry-box--compact--article")
         verge_articles = []
-        for article in verge_gaming_articles[:6]:
+        for article in verge_gaming_articles[:10]:
             verge_articles.append({
                 'url': article.a.get("href"),
                 'image': article.find_all("img")[1].get("src"),
@@ -118,7 +116,7 @@ def home(request):
                 })
             except:
                 pcgamer_news.append({
-                    'url': a.get('href'),
+                    'url': article.a.get('href'),
                     'title': article.a.get('aria-label'),
                     'image': article.img.get("src"),
                 })
