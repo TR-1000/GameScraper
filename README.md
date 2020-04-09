@@ -23,20 +23,21 @@ In this example, the app id is "275850", which is the game No Man's Sky.
 ![](https://github.com/TR-1000/GameScraper/blob/master/staticfiles/img/CaptureInspect.PNG?raw=true)
 
 Once I found a way to extract app id's from the `<a>` tags it was only a matter of figuring out the proper way to construct the image URL. The header images for games on Steam all follow the same pattern:
+
 `https://steamcdn-a.akamaihd.net/steam/apps/THE GAME'S APP ID GOES HERE/header.jpg?`
 
-So after extracting the app id of each game all I needed to do was format the URL string to include the game app id:
+So after extracting the app id of each game all I needed to do was format the URL string to include it:
 ```python
 app_id = result.get("data-ds-appid")
 image = f"https://steamcdn-a.akamaihd.net/steam/apps/{app_id}/header.jpg?"
 ```
 
-That worked fine for maost games, but I ran into a problem. Some games had more than one app id in the data-ds-appid attribute. For instance The Witcher 3: Wild Hunt Game of the Year Edition had three app ids because it's comprised of three seperate apps, the base game and two DLC expansions, each with it's own id:
+That worked fine for most games, but I ran into a problem. Some games had more than one app id in the data-ds-appid attribute. For instance, The Witcher 3: Wild Hunt Game of the Year Edition had three app ids because it's comprised of three separate apps, the base game, and two DLC expansions, each with its own id:
 
 ![](https://github.com/TR-1000/GameScraper/blob/master/staticfiles/img/CaptureInspectWitcher.png?raw=true)
 
 
-After extraction I the ids all came back as one string: `"292030,378649,378648"` So I just refactored the code to split the string into a list and assign the first element of the list(which is the app id of the base game) to the app_id variable:
+After extraction, the ids all came back as one string: `"292030,378649,378648"` So I just refactored the code to split the string into a list and assigned the first element of the list(which is the app id of the base game) to the app_id variable:
 ```python
 if "," in result.get("data-ds-appid"):
     app_split = result.get("data-ds-appid").split(",")
@@ -44,7 +45,7 @@ if "," in result.get("data-ds-appid"):
 else:
 app_id = result.get("data-ds-appid")
 ```
-It's not a perfect solution since I'd still like to get the image the Game of the Year edition, but this is a good workaround for now since the extracted title identified the game as the Game of the Year edition. 
+It's not a perfect solution since I'd still like to get the image the Game of the Year edition, but this is a good workaround for now since the extracted title identifies the game as the Game of the Year edition. 
 
 And here's how the complete code for the steam deals scrape as it appears in the views.py file of the app:
 <br/>
@@ -78,9 +79,9 @@ except:
 ![](https://github.com/TR-1000/GameScraper/blob/master/staticfiles/img/CaptureSearch.PNG?raw=true)
 
 
-One of the features I wanted for this app was the ability fo search for a game and get back information. I used the great RAWG API but I wanted to add results from GameSpot as well. They either didn't have an API or I just couldn't figure out how to use it. So I decided to just scrape the info I needed! 
+One of the features I wanted for this app was the ability to search for a game and get back information. I used the great RAWG API but I wanted to add results from GameSpot as well.
 
-The problem with GameSpot was that the HTML code was not always consistent across different games and my scraper would break when I would search for one game but be totally fine for another. This was very common when trying to get titles in particular but happened with the release date and description fields also. So I just wrapped every in try and except blocks. It's not pretty but so far nothings breaking. 
+The problem with GameSpot was that the HTML code was not always consistent across different games and my scraper would break when I would search for one game but be totally fine for another. This was very common when trying to get titles in particular but happened with the release date and description fields also. So I just wrapped everything in try and except blocks. It's not pretty but so far nothings breaking. 
 
 I plant to clean this up eventually:
 ```python
