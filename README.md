@@ -113,7 +113,7 @@ for result in gamespot_search_results:
             description = result.p.text.strip()
             print(description)
     except:
-        description = '
+        description = ''
     
     gamespot_search.append({
         'title' : title,
