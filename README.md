@@ -4,7 +4,7 @@
 # What This App Does and Why I Built It:
 GameScraper is a web application that scrapes the web for video game news and deals. 
 
-When I first started learning Python and was looking for something to apply it to I had a hard time finding something that interested me and after a while, I stopped coding. Then as I was installing some addons on Kodi I noticed there was quite a lot of Python involved! And I also saw the Beautiful Soup logo. So then it dawned on me that maybe Beautiful Soup was used to scrape information about the various movies and television shows. I like to know the day, month, and year a movie came out or an episode of a show first aired. I really do enjoy data. And I also love videogames. So for my capstone project I wanted to combined all of those things in a web app.
+When I first started learning Python and was looking for something to apply it to I had a hard time finding something that interested me. Then as I was installing some addons on Kodi I noticed there was quite a lot of Python involved! And I also saw the Beautiful Soup logo. So then it dawned on me that maybe Beautiful Soup was used to scrape information about the various movies and television shows and that inspired me to learn about web scraping. So for my capstone project I wanted to combine my interest in data collection and my love for videogames into a web application.
 
 At this time GameScraper collects data from PC Gamer, Steam, The Verge, and Techspot to aggregate the latest news and deals. The search function collects data from Gamespot and the RAWG API. It used to also utilized the Bing Web Search API but only during my 2-week trial.
 
@@ -15,17 +15,17 @@ At this time GameScraper collects data from PC Gamer, Steam, The Verge, and Tech
 
 # Challenges
 
-### Getting images from the Steam Specials tab
-The images that are used on the steam home page are small. A lot smaller than what I wanted to display on my app. Resizing the images to make them bigger just made them blurry. So instead of extracting the images with Beautiful Soup, I extracted the games' Steam app id from the data-ds-appid attribute in the `<a>` tag:
+### Getting images from the Steam specials tab
+The images that are used on the steam home page are small. A lot smaller than what I wanted to display in my app. Resizing the images to make them bigger just made them blurry. So instead of extracting the images with Beautiful Soup, I extracted the games' Steam app id from the data-ds-appid attribute in the `<a>` tag and inserted them into a header url:
 
 In this example, the app id is "275850", which is the game No Man's Sky.
 
 ![](https://github.com/TR-1000/GameScraper/blob/master/staticfiles/img/CaptureInspect.PNG?raw=true)
 
 Once I found a way to extract app id's from the `<a>` tags it was only a matter of figuring out the proper way to construct the image URL. The header images for games on Steam all follow the same pattern. This is the header image URL for No Man's Sky: 
-`https://steamcdn-a.akamaihd.net/steam/apps/275850/header.jpg?`
+`https://steamcdn-a.akamaihd.net/steam/apps/THE GAME'S APP ID GOES HERE/header.jpg?`
 
-So after extraction the app id of each game all I needed to do was format the URL string to include the game app id:
+So after extracting the app id of each game all I needed to do was format the URL string to include the game app id:
 ```python
 app_id = result.get("data-ds-appid")
 image = f"https://steamcdn-a.akamaihd.net/steam/apps/{app_id}/header.jpg?"
