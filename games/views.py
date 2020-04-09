@@ -1,9 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
+from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from . models import Game
 from . forms import GameForm
-from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from bs4 import BeautifulSoup
 import requests
@@ -14,11 +15,8 @@ import json
 ################################################################################
 
 @cache_page(60*30) # number of sec. til cache expires (60 secs time 60 mins )
+@csrf_protect
 def home(request):
-
-    if request.method == 'POST':
-        cache.clear()
-
 
     # Verge gaming news
     try:
@@ -170,11 +168,7 @@ def favorites(request):
 
 def search(request):
 
-
-    cache.clear()
     if request.method == 'POST':
-        cache.clear()
-
         #set variable for searched game
         game_title = request.POST['game_search']
 
