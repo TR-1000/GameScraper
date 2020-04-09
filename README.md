@@ -125,10 +125,12 @@ for result in gamespot_search_results:
 
 
 # Issues
-* Sometimes Amazon search requests don't got through the first time.
+* Scrapers can and will break
+* The search feature doesn't always return the expected results
 
 
 # Features I'd Like to Add
+* Move scraper code from views.py to seperate file and import it's function into views.py
 * Save scrape results to the database
 * User login and ability to comment on other users favorites.
 * Only the user who created the favorite can edit it.
@@ -136,5 +138,6 @@ for result in gamespot_search_results:
 
 # Help Along The Way
 * [CommonLounge Web Development with Django Path](https://https://www.commonlounge.com//)
+* [Beautiful Soup Docs](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
 * [Stack Overflow](https://stackoverflow.com/)
 * [W3Schools](https://www.w3schools.com/howto/howto_css_tooltip.asp)
