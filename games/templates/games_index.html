@@ -16,7 +16,7 @@
           </div>
           <div class="card-stacked">
             <div class="card-content">
-              <h5>{{item.title}}</h5>
+              <h4>{{item.title}}</h4>
               <h6>{{item.price}}</h6>
               <a class="card-action" href="{{item.url}}" target="_blank" ><h6>More...</h6></a>
             </div>
@@ -27,25 +27,6 @@
     </div>
   {% endif %}
 
-
-  <!-- PCgamer -->
-    <div class="container">
-      <div class=" card item-contain blue-card">
-      <h2 id="favorites">Latest News from PC Gamer</h2>
-      {% for item in pcgamer_news %}
-        <div class="card steam">
-          <div class="card-image">
-            <img src="{{item.image}}">
-          </div>
-          <div class="card-content">
-            <h5>{{item.title}}</h5>
-            <a href="{{item.url}}" target="_blank"><h6>More...</h6></a>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-      
 
 <!-- Steam -->
   <div class="container">
@@ -69,6 +50,27 @@
   </div>
 
 
+  <!-- PCgamer -->
+    <div class="container">
+      <div class=" card item-contain blue-card">
+      <h2 id="favorites">Latest News from PC Gamer</h2>
+      {% for item in pcgamer_news %}
+        <div class="card steam">
+          <div class="card-image">
+            <a href="{{item.url}}" target="_blank">
+              <img src="{{item.image}}">
+            </a>
+          </div>
+          <div class="card-content">
+            <h4>{{item.title}}</h4>
+
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+
   <!-- Techspot -->
     <div class="container">
       <div class=" card item-contain blue-card">
@@ -76,12 +78,13 @@
       {% for item in techspot_articles %}
         <div class="card steam">
           <div class="card-image">
-            <img src="{{item.image}}">
+            <a href="{{item.url}}" target="_blank">
+              <img src="{{item.image}}">
+            </a>
           </div>
           <div class="card-content">
-            <h5>{{item.title}}</h5>
+            <h4>{{item.title}}</h4>
             <p>{{item.intro}}</p>
-            <a href="{{item.url}}" target="_blank"><h6>More...</h6></a>
           </div>
         </div>
         {% endfor %}
@@ -96,23 +99,19 @@
       {% for item in verge_articles %}
       <div class="card steam">
         <div class="card-image">
-          <img src="{{item.image}}">
+          <a class="card-action" href="{{item.url}}" target="_blank" >
+            <img src="{{item.image}}">
+          </a>
         </div>
         <div class="card-stacked">
           <div class="card-content">
-            <h5>{{item.title}}</h5>
-            <a class="card-action" href="{{item.url}}" target="_blank" ><h6>More...</h6></a>
+            <h4>{{item.title}}</h4>
           </div>
         </div>
       </div>
       {% endfor %}
     </div>
   </div>
-
-
-
-
-
 
 
 
