@@ -22,7 +22,7 @@ In this example, the app id is "275850", which is the game No Man's Sky.
 
 ![](https://github.com/TR-1000/GameScraper/blob/master/staticfiles/img/CaptureInspect.PNG?raw=true)
 
-Once I found a way to extract app id's from the `<a>` tags it was only a matter of figuring out the proper way to construct the image URL. The header images for games on Steam all follow the same pattern. This is the header image URL for No Man's Sky: 
+Once I found a way to extract app id's from the `<a>` tags it was only a matter of figuring out the proper way to construct the image URL. The header images for games on Steam all follow the same pattern:
 `https://steamcdn-a.akamaihd.net/steam/apps/THE GAME'S APP ID GOES HERE/header.jpg?`
 
 So after extracting the app id of each game all I needed to do was format the URL string to include the game app id:
