@@ -112,14 +112,11 @@ def home(request):
                 pcgamer_news.append({
                     'url': article.a.get('href'),
                     'title': article.a.get('aria-label'),
-                    'image': article.source.get('data-original-mos'),
+                    'image': article.img.get('data-original-mos'),
                 })
             except:
-                pcgamer_news.append({
-                    'url': article.a.get('href'),
-                    'title': article.a.get('aria-label'),
-                    'image': article.img.get("src"),
-                })
+                print("skip")
+                continue
 
 
         pcgamer_articles = pcgamer_news_soup.select("div.listingResults.all div.listingResult")
