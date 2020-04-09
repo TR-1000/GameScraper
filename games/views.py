@@ -200,20 +200,27 @@ def search(request):
             except:
                 released = ''
             try:
-
                 if result.p != None:
                     description = result.p.text.strip()
                     print(description)
             except:
                 description = ''
 
-            gamespot_search.append({
-                'title' : title,
-                'url' : url,
-                'image' : image,
-                'released' : released,
-                'description': description
-            })
+            try:
+                gamespot_search.append({
+                    'title' : title,
+                    'url' : url,
+                    'image' : image,
+                    'released' : released,
+                    'description': description
+                    })
+            except:
+                gamespot_search.append({
+                    'title' : title,
+                    'url' : url,
+                    'image' : image,
+                    'released' : released,
+                    })
 
 
         #Steam search scrape
