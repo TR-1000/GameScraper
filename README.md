@@ -77,58 +77,6 @@ except:
     steam_news = None
 ```
 
-### The Search:
-![](https://github.com/TR-1000/GameScraper/blob/master/staticfiles/img/CaptureSearch.PNG?raw=true)
-
-
-One of the features I wanted for this app was the ability to search for a game and get back information. I used the great RAWG API but I wanted to add results from GameSpot as well.
-
-The problem with GameSpot was that the HTML code was not always consistent across different games and my scraper would break when I would search for one game but be totally fine for another. This was very common when trying to get titles in particular but happened with the release date and description fields also. So I just wrapped everything in try and except blocks. It's not pretty but so far nothings breaking. 
-
-I plant to clean this up eventually:
-```python
-# Gamespot Search
-gamespot_search_page = requests.get("https://www.gamespot.com/search/?header=1&q=" + game_title,headers={"User-Agent":"Defined"})
-gamespot_search_soup = BeautifulSoup(gamespot_search_page.content, "html.parser")
-gamespot_search_results = gamespot_search_soup.select("li.media")
-#print(gamespot_search_results)
-gamespot_search = []
-for result in gamespot_search_results:
-    try:
-        title = result.span.a.text
-    except:
-        title = ''
-    try:
-        url = "https://www.gamespot.com" + result.a.get('href')
-    except:
-        url = ''
-    try:
-        image = result.img.get('src')
-    except:
-        image = ''
-    try:
-        released = result.time.span.text
-    except:
-        released = ''
-    try
-        if result.p != None:
-            description = result.p.text.strip()
-            print(description)
-    except:
-        description = ''
-    
-    gamespot_search.append({
-        'title' : title,
-        'url' : url,
-        'image' : image,
-        'released' : released,
-        'description': description
-    })
-    
-  
-```
-
-
 # Issues
 * Scrapers can and will break
 * The search feature doesn't always return the expected results
