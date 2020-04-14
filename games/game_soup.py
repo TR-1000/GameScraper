@@ -173,7 +173,7 @@ def get_pcgamer_news():
             pcgamer_news.append({
                 'url': article.a.get('href'),
                 'title': article.a.get('aria-label'),
-                'image': article.source.get('data-original-mos'),
+                'image': article.img.get('data-original-mos'),
             })
         except:
             pcgamer_news.append({
