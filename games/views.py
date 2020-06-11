@@ -45,16 +45,16 @@ def home(request):
 
 
     #PC Gamer News
-    try:
-        pcgamer_news = get_pcgamer_news()
-    except:
-        pcgamer_news = None
+    # try:
+    #     pcgamer_news = get_pcgamer_news()
+    # except:
+    #     pcgamer_news = None
 
 
     # Return and render results to template
     return render(request, 'games_index.html',{
         'search' : False,
-        'pcgamer_news': pcgamer_news,
+        # 'pcgamer_news': pcgamer_news,
         'steam_news': steam_news,
         'verge_articles' : verge_articles,
         'techspot_articles': techspot_articles,
