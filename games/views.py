@@ -16,7 +16,7 @@ import json
 # HOME VIEW
 ################################################################################
 
-# @cache_page(60*35) # number of sec. til cache expires (60 secs time 60 mins )
+@cache_page(60*35) # number of sec. til cache expires (60 secs time 60 mins )
 @csrf_protect
 def home(request):
 
