@@ -7,9 +7,9 @@ pp = pprint.PrettyPrinter(indent=4)
 
 
 def get_steam_deals():
-    steam_news_page = requests.get("https://store.steampowered.com/",headers={"User-Agent":"Defined"})
+    steam_news_page = requests.get("https://store.steampowered.com/search/?specials=1",headers={"User-Agent":"Defined"})
     soup = BeautifulSoup(steam_news_page.text, "html.parser")
-    steam_results = soup.find("div", {"id": "tab_specials_content"}).select("a")
+    steam_results = soup.find("div", {"id": "search_resultsRows"}).select("a")
     steam_deals = []
     for result in steam_results:
         try:
@@ -23,9 +23,9 @@ def get_steam_deals():
                 steam_deals.append({
                     'url': result.get("href"),
                     'image': f"https://steamcdn-a.akamaihd.net/steam/apps/{app_id}/header.jpg",
-                    'title': result.find("div", {"class": "tab_item_name"}).text,
-                    'original_prince': result.find("div", {"class": "discount_original_price"}).text,
-                    'price': result.find("div", {"class": "discount_final_price"}).text,
+                    'title': result.find("span", {"class": "title"}).text,
+                    'original_prince': result.find("strike").text,
+                    'price': "$" + result.find("div", {"class": "discounted"}).text.split("$")[2].strip(),
                     'app_id': app_id
                 })
         except Exception as e:
