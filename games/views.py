@@ -1,130 +1,61 @@
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
+from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from . models import Game
 from . forms import GameForm
-from django.contrib.auth.decorators import login_required
-
+from . game_soup import get_steam_deals, get_verge_gaming, get_pcgamer_news, get_techspot
+# from django.core.cache import cache
+from bs4 import BeautifulSoup
+import requests
+import json
 
 
 ################################################################################
 # HOME VIEW
 ################################################################################
 
-@cache_page(60*30) # number of sec. til cache expires (60 secs time 30 mins)
+@cache_page(60*35) # number of sec. til cache expires (60 secs time 60 mins )
+@csrf_protect
 def home(request):
-    from bs4 import BeautifulSoup
-    import requests
-    import json
-    import os
-
-
-
-    ## LANDING PAGE ##
 
     # Verge gaming news
     try:
-        verge_gaming_page = requests.get("https://www.theverge.com/games",headers={"User-Agent":"Defined"})
-        verge_gaming_soup = BeautifulSoup(verge_gaming_page.content,"html.parser")
-        verge_gaming_articles = verge_gaming_soup.select("div.c-entry-box--compact.c-entry-box--compact--article")
-        verge_articles = []
-        for article in verge_gaming_articles[:6]:
-            verge_articles.append({
-                'url': article.a.get("href"),
-                'image': article.find_all("img")[1].get("src"),
-                'title': article.h2.text,
-                'date': article.time.text.strip()
-            })
+        verge_articles = get_verge_gaming()
     except:
         verge_articles = None
-    #Amazon Featured
-    try:
-        amazon_page = requests.get("https://www.amazon.com/s?k=video+games&rh=n%3A468642&dc&qid=1578698986&rnid=2941120011&ref=sr_nr_n_1",headers={"User-Agent":"Defined"})
-        amazon_soup = BeautifulSoup(amazon_page.content, "html.parser")
-        amazon_featured = []
-        amazon_results = amazon_soup.select("div.s-result-list.s-search-results.sg-row")
-        results = amazon_results[0].select("div.a-section.a-spacing-medium")
-        for result in results:
-            title = result.h2.text
-            image = result.img.get('src')
-            url = "https://www.amazon.com/" + result.a.get('href')
-            price_span = result.select("span.a-offscreen")
-            if price_span == []:
-                price = "Price NA"
-            else:
-                price = price_span[0].text
-                amazon_featured.append({
-                'title' : title,
-                'image' : image,
-                'url' : url,
-                'price' : price
-                })
-    except:
-        amazon_featured = None
+
+
+
     #Steam News Scrape
     try:
-        steam_news_page = requests.get("https://store.steampowered.com/",headers={"User-Agent":"Defined"})
-        soup = BeautifulSoup(steam_news_page.text, "html.parser")
-        steam_results = soup.find("div", {"id": "tab_specials_content"}).select("a")
-        steam_news = []
-        for result in steam_results[:10]:
-            if "," in result.get("data-ds-appid"):
-                app_split = result.get("data-ds-appid").split(",")
-                app_id = app_split[0]
-            else:
-                app_id = result.get("data-ds-appid")
-            steam_news.append({
-                'url': result.get("href"),
-                'image': f"https://steamcdn-a.akamaihd.net/steam/apps/{app_id}/header.jpg",
-                'title': result.find("div", {"class": "tab_item_name"}).text,
-                'original_prince': result.find("div", {"class": "discount_original_price"}).text,
-                'price': result.find("div", {"class": "discount_final_price"}).text,
-                'app_id': app_id
-            })
+        steam_news = get_steam_deals()
     except:
         steam_news = None
+
+
+
     #Techspot News
     try:
-        techspot_request = requests.get("https://www.techspot.com/category/gaming/",headers={"User-Agent":"Defined"})
-        techspot_soup  = BeautifulSoup(techspot_request.content,"html.parser")
-        techspot_results = techspot_soup.select("article")
-        techspot_articles = []
-        for result in techspot_results[:10]:
-            techspot_articles.append({
-                'title': result.h2.text.replace("\xa0"," ").strip(),
-                'url': result.a.get("href"),
-                'image': result.img.get("data-src"),
-                'intro': result.find("div", {"class": "intro"}).text
-                })
+        techspot_articles = get_techspot()
     except:
         techspot_articles = None
+
+
+
     #PC Gamer News
     try:
-        pcgamer_news_page = requests.get("https://www.pcgamer.com/",headers={"User-Agent":"Defined"})
-        pcgamer_news_soup = BeautifulSoup(pcgamer_news_page.content, "html.parser")
-        pcgamer_featured = pcgamer_news_soup.find_all("div", {"class": "feature-block-item-wrapper"})
-        pcgamer_news = []
-        for article in pcgamer_featured[1:]:
-            try:
-                pcgamer_news.append({
-                    'url': article.a.get('href'),
-                    'title': article.a.get('aria-label'),
-                    'image': article.source.get('data-original-mos'),
-                })
-            except:
-                pcgamer_news.append({
-                    'url': article.a.get('href'),
-                    'title': article.a.get('aria-label'),
-                    'image': article.img.get("src"),
-                })
+        pcgamer_news = get_pcgamer_news()
     except:
         pcgamer_news = None
+
+
     # Return and render results to template
     return render(request, 'games_index.html',{
         'search' : False,
         'pcgamer_news': pcgamer_news,
         'steam_news': steam_news,
-        'amazon_featured': amazon_featured,
         'verge_articles' : verge_articles,
         'techspot_articles': techspot_articles,
     })
@@ -149,18 +80,11 @@ def favorites(request):
 # SEARCH
 ################################################################################
 
-@cache_page(60*30)
 def search(request):
-    from bs4 import BeautifulSoup
-    import requests
-    import json
-
 
     if request.method == 'POST':
-
         #set variable for searched game
         game_title = request.POST['game_search']
-
 
         #Gamespot Search
         gamespot_search_page = requests.get("https://www.gamespot.com/search/?header=1&q=" + game_title,headers={"User-Agent":"Defined"})
@@ -186,7 +110,6 @@ def search(request):
             except:
                 released = ''
             try:
-
                 if result.p != None:
                     description = result.p.text.strip()
                     print(description)
@@ -271,7 +194,6 @@ def search(request):
 
 
 
-
         #rawg api data request
         rawg_api_response = requests.get(f'https://api.rawg.io/api/games?page_size=1&search={game_title}')
         try:
@@ -290,7 +212,7 @@ def search(request):
                                                     })
 
     else:
-        return(request, 'search.html')
+        return redirect('home') # Redirect to home() view
 
 
 
