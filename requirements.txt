@@ -1,4 +1,4 @@
-﻿asgiref==3.2.3
+asgiref==3.2.3
 attrs==19.3.0
 Automat==0.8.0
 azure-cognitiveservices-nspkg==3.0.1
@@ -11,11 +11,11 @@ certifi==2019.9.11
 cffi==1.13.2
 chardet==3.0.4
 constantly==15.1.0
-cryptography==2.8
+cryptography>=3.2
 cssselect==1.1.0
 dj-database-url==0.5.0
 dj-static==0.0.6
-Django==3.0.7
+Django==3.0.4
 django-toolbelt==0.0.1
 gunicorn==19.9.0
 hyperlink==19.0.0
