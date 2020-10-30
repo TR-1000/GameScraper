@@ -1,4 +1,4 @@
-﻿asgiref==3.2.3
+asgiref==3.2.3
 attrs==19.3.0
 Automat==0.8.0
 azure-cognitiveservices-nspkg==3.0.1

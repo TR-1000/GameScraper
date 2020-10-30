@@ -31,7 +31,7 @@
             <img class=favorite_image src="{{game.image}}">
           <span class="card-title"><h4>{{game}}</h4></span>
 
-          <form action="{% url 'home' %}" method="POST">
+          <form action="{% url 'search' %}" method="POST">
             {% csrf_token %}
             <input type="hidden" name="game_search" value="{{game}}">
             <button class="btn waves-effect waves-light" type="submit" name="action">Get Info
