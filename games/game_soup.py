@@ -1,13 +1,16 @@
 import requests
 import sys
+import logging
 from bs4 import BeautifulSoup
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
 # header={ 'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36'})
 
 
-
+logging.basicConfig(level=logging.DEBUG, filename='app.log', filemode='w')
 def get_steam_deals():
+    sys.stdout.write("getting steam")
+    print("getting steam")
     steam_news_page = requests.get("https://store.steampowered.com/search/?specials=1",headers={"User-Agent":"Defined"})
     soup = BeautifulSoup(steam_news_page.text, "html.parser")
     steam_results = soup.find("div", {"id": "search_resultsRows"}).select("a")
@@ -30,12 +33,15 @@ def get_steam_deals():
                     'app_id': app_id
                 })
         except Exception as e:
-            sys.stdout.write(e)
+
+            logging.debug(result.find("span", {"class": "title"}).text)
+            logging.error(e, exc_info=True)
+            print(result.find("span", {"class": "title"}).text)
             continue
 
     return steam_deals
 
-
+get_steam_deals()
 
 def get_pcgamer_news():
     pcgamer_news_page = requests.get("https://www.pcgamer.com/",headers={"User-Agent":"Defined"})
@@ -66,7 +72,7 @@ def get_pcgamer_news():
                 'image': article.img.get('data-original-mos')
                 })
             except Exception as e:
-                print(e)
+                logging.error(e, exc_info=True)
                 continue
 
 
@@ -91,7 +97,7 @@ def get_verge_gaming():
                 })
 
             except Exception as e:
-
+                logging.error(e, exc_info=True)
                 print(e, f'{article.h2.text} was skipped')
                 continue
         else:
@@ -117,7 +123,7 @@ def get_techspot():
                         'intro': result.find("div", {"class": "intro"}).text
                     })
             except Exception as e:
-                print(e)
+                logging.error(e, exc_info=True)
                 continue
 
         else:
