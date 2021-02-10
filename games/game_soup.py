@@ -1,4 +1,5 @@
 import requests
+import sys
 from bs4 import BeautifulSoup
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
@@ -29,7 +30,7 @@ def get_steam_deals():
                     'app_id': app_id
                 })
         except Exception as e:
-            print(e)
+            sys.stdout.write(e)
             continue
 
     return steam_deals
