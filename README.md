@@ -2,7 +2,7 @@
 ![](https://github.com/TR-1000/GameScraper/blob/master/staticfiles/img/GameCapture.PNG?raw=true)
 
 # What This App Does and Why I Built It:
-GameScraper is a web application that scrapes the web for video game news and deals. 
+GameScraper is a web application that scrapes the web for video game news and deals.
 
 When I first started learning Python and was looking for something to apply it to I had a hard time finding something that interested me. Then as I was installing some addons on Kodi I noticed there was quite a lot of Python involved! And I also saw the Beautiful Soup logo. So then it dawned on me that maybe Beautiful Soup was used to scrape information about the various movies and television shows and that inspired me to learn about web scraping. So for my capstone project I wanted to combine my interest in data collection and my love for videogames into a web application.
 
@@ -94,3 +94,7 @@ except:
 * [Beautiful Soup Docs](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
 * [Stack Overflow](https://stackoverflow.com/)
 * [W3Schools](https://www.w3schools.com/howto/howto_css_tooltip.asp)
+
+### Starting app locally
+* Activate virtual env ```.\myvenv\Scripts\activate```
+* Start dev server ```python .\manage.py runserver ```
