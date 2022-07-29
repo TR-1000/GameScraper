@@ -39,7 +39,7 @@ pytz==2019.2
 queuelib==1.5.0
 requests==2.22.0
 requests-oauthlib==1.2.0
-Scrapy==1.8.0
+Scrapy==2.6.2
 scrapy-djangoitem==1.1.1
 service-identity==18.1.0
 six==1.14.0
